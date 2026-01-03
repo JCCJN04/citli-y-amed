@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import DressCodeSection from './DressCodeSection';
+import { asset } from '@/utils/asset';
 
 // Declaración para que TypeScript no se queje del objeto global Tally
 declare global {
@@ -324,7 +325,7 @@ const InvitationContent: React.FC = () => {
         >
           <Menu className="w-6 h-6" />
         </button>
-        <img src="/Logo Citli y Amed .png" alt="C&A" className="h-16 w-auto" />
+        <img src={asset('Logo Citli y Amed .png')} alt="C&A" className="h-16 w-auto" />
       </header>
 
       {/* MENU OVERLAY */}
@@ -352,7 +353,7 @@ const InvitationContent: React.FC = () => {
                 >
                   <X className="w-6 h-6" />
                 </button>
-                <img src="/Logo Citli y Amed .png" alt="C&A" className="h-16 w-auto" />
+                <img src={asset('Logo Citli y Amed .png')} alt="C&A" className="h-16 w-auto" />
               </div>
               <nav className="flex flex-col gap-6 px-10">
                 {menuItems.map((item, index) => (
@@ -378,7 +379,7 @@ const InvitationContent: React.FC = () => {
         {/* Fondo editorial (textura) */}
         <div className="absolute inset-0 -z-20">
           <img
-            src="/fondo.png"
+            src={asset('fondo.png')}
             className="w-full h-full object-cover opacity-95"
             alt="bg"
           />
@@ -406,7 +407,7 @@ const InvitationContent: React.FC = () => {
           className="bg-white p-4 pb-16 max-w-[340px] md:max-w-[420px] border border-black/10 shadow-[0_28px_55px_-38px_rgba(0,0,0,0.35)]"
         >
           <div className="aspect-[3/4] overflow-hidden grayscale contrast-125">
-            <img src="/foto1.png" className="w-full h-full object-cover" alt="Couple" />
+            <img src={asset('foto1.png')} className="w-full h-full object-cover" alt="Couple" />
           </div>
         </motion.div>
 
@@ -433,7 +434,7 @@ const InvitationContent: React.FC = () => {
         <div 
           className="absolute inset-0 z-0 opacity-40 grayscale mix-blend-multiply pointer-events-none"
           style={{ 
-            backgroundImage: 'url("/wedding invitation paper texture.jpg")',
+            backgroundImage: `url(${asset('wedding invitation paper texture.jpg')})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -476,7 +477,7 @@ const InvitationContent: React.FC = () => {
           {/* Ceremonia Religiosa */}
           <motion.div {...fadeInUp} className="matchbox-card p-8 flex flex-col text-center">
             <div className="w-full h-56 mb-6 overflow-hidden flex items-center justify-center bg-stone-50">
-              <img src="iglesia.png" className="w-full h-full object-contain grayscale" alt="Iglesia" />
+              <img src={asset('iglesia.png')} className="w-full h-full object-contain grayscale" alt="Iglesia" />
             </div>
             <h3 className="font-serif-display text-2xl tracking-wider uppercase mb-4 text-[#5f6d4f]">Ceremonia Religiosa</h3>
             <p className="font-serif-elegant italic text-[#9a8c7e] mb-6 text-lg">13:00 H</p>
@@ -503,7 +504,7 @@ const InvitationContent: React.FC = () => {
           {/* Ceremonia Civil y Recepción */}
           <motion.div {...fadeInUp} className="matchbox-card p-8 flex flex-col text-center">
             <div className="w-full h-56 mb-6 overflow-hidden flex items-center justify-center bg-stone-50">
-              <img src="ceremonia.png" className="w-full h-full object-contain grayscale" alt="Ceremonia" />
+              <img src={asset('ceremonia.png')} className="w-full h-full object-contain grayscale" alt="Ceremonia" />
             </div>
             <h3 className="font-serif-display text-2xl tracking-wider uppercase mb-4 text-[#5f6d4f]">Ceremonia Civil y Recepción</h3>
             <p className="font-serif-elegant italic text-[#9a8c7e] mb-6 text-lg">15:00 H</p>
@@ -770,7 +771,7 @@ const InvitationContent: React.FC = () => {
         <motion.div {...fadeInUp} className="flex justify-start pl-4 mb-16">
           <div className="bg-white p-2 pb-10 shadow-lg rotate-1 border border-stone-100 max-w-[400px]">
             <div className="aspect-square overflow-hidden grayscale opacity-80">
-              <img src="foto4.png?auto=format&fit=crop&q=80&w=800" alt="Detail" />
+              <img src={asset('foto4.png')} alt="Detail" />
             </div>
           </div>
         </motion.div>
@@ -1110,7 +1111,7 @@ const InvitationContent: React.FC = () => {
           {/* Decorative Image */}
           <div className="mt-16 flex justify-center">
              <div className="bg-white p-2 shadow-md -rotate-2 border border-stone-50 max-w-[320px]">
-                <img src="foto3.png?auto=format&fit=crop&q=80&w=400" className="grayscale contrast-125" alt="Cafe" />
+                <img src={asset('foto3.png')} className="grayscale contrast-125" alt="Cafe" />
              </div>
           </div>
         </div>

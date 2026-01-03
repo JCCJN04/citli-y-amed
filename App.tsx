@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause } from 'lucide-react';
 import IntroAnimation from './components/IntroAnimation';
 import InvitationContent from './components/InvitationContent';
+import { asset } from '@/utils/asset';
 
 const App: React.FC = () => {
   const [showContent, setShowContent] = useState(false);
@@ -97,7 +98,7 @@ const App: React.FC = () => {
 
       {/* Audio element */}
       <audio ref={audioRef} loop>
-        <source src="/Mina - Nessuno.mp4" type="audio/mp4" />
+        <source src={asset('Mina - Nessuno.mp4')} type="audio/mp4" />
       </audio>
     </main>
   );
