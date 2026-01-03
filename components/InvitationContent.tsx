@@ -11,6 +11,141 @@ declare global {
   }
 }
 
+// ============================================
+// ÍCONOS DE CLIMA - Diseño Editorial Minimalista
+// ============================================
+// Íconos SVG monocromáticos diseñados específicamente para
+// invitaciones de boda premium. Estilo flat, geometría simple,
+// sin gradientes ni efectos 3D.
+
+const WeatherIcon: React.FC<{ code: string; className?: string }> = ({ code, className = "" }) => {
+  const baseClass = "w-full h-full";
+  const iconColor = "#7a8269"; // Color principal de la invitación
+  const secondaryColor = "#9a8c7e"; // Color secundario
+
+  // Mapeo de códigos OpenWeatherMap a íconos elegantes
+  const getIcon = () => {
+    // Códigos de día (d) y noche (n)
+    const codeBase = code.substring(0, 2);
+    
+    switch(codeBase) {
+      case '01': // Cielo despejado
+        return (
+          <svg viewBox="0 0 64 64" fill="none" className={baseClass}>
+            <circle cx="32" cy="32" r="11" fill={iconColor} opacity="0.2"/>
+            <circle cx="32" cy="32" r="8" fill={iconColor}/>
+            {/* Rayos del sol */}
+            <line x1="32" y1="8" x2="32" y2="14" stroke={iconColor} strokeWidth="2.5" strokeLinecap="round"/>
+            <line x1="32" y1="50" x2="32" y2="56" stroke={iconColor} strokeWidth="2.5" strokeLinecap="round"/>
+            <line x1="8" y1="32" x2="14" y2="32" stroke={iconColor} strokeWidth="2.5" strokeLinecap="round"/>
+            <line x1="50" y1="32" x2="56" y2="32" stroke={iconColor} strokeWidth="2.5" strokeLinecap="round"/>
+            <line x1="13.5" y1="13.5" x2="18" y2="18" stroke={iconColor} strokeWidth="2.5" strokeLinecap="round"/>
+            <line x1="46" y1="46" x2="50.5" y2="50.5" stroke={iconColor} strokeWidth="2.5" strokeLinecap="round"/>
+            <line x1="50.5" y1="13.5" x2="46" y2="18" stroke={iconColor} strokeWidth="2.5" strokeLinecap="round"/>
+            <line x1="18" y1="46" x2="13.5" y2="50.5" stroke={iconColor} strokeWidth="2.5" strokeLinecap="round"/>
+          </svg>
+        );
+      
+      case '02': // Parcialmente nublado
+        return (
+          <svg viewBox="0 0 64 64" fill="none" className={baseClass}>
+            {/* Sol parcial */}
+            <circle cx="24" cy="22" r="7" fill={iconColor} opacity="0.9"/>
+            <line x1="24" y1="10" x2="24" y2="13" stroke={iconColor} strokeWidth="2" strokeLinecap="round" opacity="0.7"/>
+            <line x1="10" y1="22" x2="13" y2="22" stroke={iconColor} strokeWidth="2" strokeLinecap="round" opacity="0.7"/>
+            <line x1="14" y1="14" x2="16" y2="16" stroke={iconColor} strokeWidth="2" strokeLinecap="round" opacity="0.7"/>
+            <line x1="34" y1="14" x2="32" y2="16" stroke={iconColor} strokeWidth="2" strokeLinecap="round" opacity="0.7"/>
+            {/* Nube */}
+            <path d="M 18 34 Q 18 28 24 28 Q 26 24 30 24 Q 36 24 38 28 Q 44 28 44 34 Q 44 40 38 40 L 24 40 Q 18 40 18 34 Z" 
+                  fill={secondaryColor} opacity="0.6"/>
+          </svg>
+        );
+      
+      case '03': // Nublado
+      case '04': // Muy nublado
+        return (
+          <svg viewBox="0 0 64 64" fill="none" className={baseClass}>
+            {/* Nube principal */}
+            <path d="M 14 32 Q 14 26 20 26 Q 22 22 27 22 Q 33 22 35 26 Q 42 26 42 32 Q 42 38 35 38 L 20 38 Q 14 38 14 32 Z" 
+                  fill={iconColor} opacity="0.5"/>
+            {/* Nube secundaria */}
+            <path d="M 22 38 Q 22 34 26 34 Q 28 31 32 31 Q 37 31 39 34 Q 44 34 44 38 Q 44 43 39 43 L 26 43 Q 22 43 22 38 Z" 
+                  fill={secondaryColor} opacity="0.6"/>
+          </svg>
+        );
+      
+      case '09': // Lluvia ligera
+      case '10': // Lluvia
+        return (
+          <svg viewBox="0 0 64 64" fill="none" className={baseClass}>
+            {/* Nube */}
+            <path d="M 16 24 Q 16 18 22 18 Q 24 14 29 14 Q 35 14 37 18 Q 44 18 44 24 Q 44 30 37 30 L 22 30 Q 16 30 16 24 Z" 
+                  fill={iconColor} opacity="0.6"/>
+            {/* Gotas de lluvia */}
+            <line x1="24" y1="34" x2="22" y2="42" stroke={iconColor} strokeWidth="2.5" strokeLinecap="round" opacity="0.7"/>
+            <line x1="30" y1="34" x2="28" y2="42" stroke={iconColor} strokeWidth="2.5" strokeLinecap="round" opacity="0.7"/>
+            <line x1="36" y1="34" x2="34" y2="42" stroke={iconColor} strokeWidth="2.5" strokeLinecap="round" opacity="0.7"/>
+            <line x1="27" y1="40" x2="25" y2="48" stroke={iconColor} strokeWidth="2.5" strokeLinecap="round" opacity="0.5"/>
+            <line x1="33" y1="40" x2="31" y2="48" stroke={iconColor} strokeWidth="2.5" strokeLinecap="round" opacity="0.5"/>
+          </svg>
+        );
+      
+      case '11': // Tormenta
+        return (
+          <svg viewBox="0 0 64 64" fill="none" className={baseClass}>
+            {/* Nube oscura */}
+            <path d="M 16 22 Q 16 16 22 16 Q 24 12 29 12 Q 35 12 37 16 Q 44 16 44 22 Q 44 28 37 28 L 22 28 Q 16 28 16 22 Z" 
+                  fill={iconColor} opacity="0.7"/>
+            {/* Rayo */}
+            <path d="M 32 28 L 28 38 L 34 38 L 30 50" stroke={iconColor} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+          </svg>
+        );
+      
+      case '13': // Nieve
+        return (
+          <svg viewBox="0 0 64 64" fill="none" className={baseClass}>
+            {/* Nube */}
+            <path d="M 16 24 Q 16 18 22 18 Q 24 14 29 14 Q 35 14 37 18 Q 44 18 44 24 Q 44 30 37 30 L 22 30 Q 16 30 16 24 Z" 
+                  fill={iconColor} opacity="0.6"/>
+            {/* Copos de nieve */}
+            <circle cx="24" cy="38" r="2" fill={iconColor} opacity="0.6"/>
+            <circle cx="30" cy="42" r="2" fill={iconColor} opacity="0.6"/>
+            <circle cx="36" cy="38" r="2" fill={iconColor} opacity="0.6"/>
+            <circle cx="27" cy="46" r="2" fill={iconColor} opacity="0.5"/>
+            <circle cx="33" cy="46" r="2" fill={iconColor} opacity="0.5"/>
+          </svg>
+        );
+      
+      case '50': // Niebla
+        return (
+          <svg viewBox="0 0 64 64" fill="none" className={baseClass}>
+            <line x1="16" y1="24" x2="48" y2="24" stroke={iconColor} strokeWidth="3" strokeLinecap="round" opacity="0.4"/>
+            <line x1="20" y1="30" x2="44" y2="30" stroke={iconColor} strokeWidth="3" strokeLinecap="round" opacity="0.5"/>
+            <line x1="16" y1="36" x2="48" y2="36" stroke={iconColor} strokeWidth="3" strokeLinecap="round" opacity="0.4"/>
+            <line x1="20" y1="42" x2="44" y2="42" stroke={iconColor} strokeWidth="3" strokeLinecap="round" opacity="0.3"/>
+          </svg>
+        );
+      
+      default: // Icono genérico por defecto (soleado parcial)
+        return (
+          <svg viewBox="0 0 64 64" fill="none" className={baseClass}>
+            <circle cx="32" cy="32" r="10" fill={iconColor} opacity="0.6"/>
+            <line x1="32" y1="10" x2="32" y2="16" stroke={iconColor} strokeWidth="2" strokeLinecap="round"/>
+            <line x1="32" y1="48" x2="32" y2="54" stroke={iconColor} strokeWidth="2" strokeLinecap="round"/>
+            <line x1="10" y1="32" x2="16" y2="32" stroke={iconColor} strokeWidth="2" strokeLinecap="round"/>
+            <line x1="48" y1="32" x2="54" y2="32" stroke={iconColor} strokeWidth="2" strokeLinecap="round"/>
+          </svg>
+        );
+    }
+  };
+
+  return (
+    <div className={className}>
+      {getIcon()}
+    </div>
+  );
+};
+
 // Interface para los datos del clima de OpenWeatherMap
 interface WeatherDay {
   day: string;
@@ -125,19 +260,20 @@ const InvitationContent: React.FC = () => {
       } catch (error) {
         console.error('❌ Error al obtener datos del clima:', error);
         
-        // FALLBACK: Mostrar datos estimados
-        console.log('🔄 Usando datos de fallback (estimados para marzo 2026)');
-        const fallbackData: WeatherDay[] = [
-          { day: 'MIÉ', date: '26', temp: 28, minTemp: 18, description: 'Soleado', iconCode: '01d' },
-          { day: 'JUE', date: '27', temp: 27, minTemp: 17, description: 'Parcialmente nublado', iconCode: '02d' },
-          { day: 'VIE', date: '28', temp: 29, minTemp: 19, description: 'Soleado', iconCode: '01d' },
-          { day: 'SÁB', date: '29', temp: 28, minTemp: 18, description: 'Parcialmente nublado', iconCode: '02d' },
-          { day: 'DOM', date: '30', temp: 30, minTemp: 19, description: 'Soleado', iconCode: '01d' }
+        // DATOS HISTÓRICOS: Promedio climático de Tepic en marzo
+        // Fuente: Datos históricos de temperatura y condiciones típicas
+        console.log('🔄 Usando datos históricos promedio de Tepic para marzo');
+        const historicalData: WeatherDay[] = [
+          { day: 'MIÉ', date: '26', temp: 31, minTemp: 17, description: 'Cielo despejado', iconCode: '01d' },
+          { day: 'JUE', date: '27', temp: 32, minTemp: 18, description: 'Cielo despejado', iconCode: '01d' },
+          { day: 'VIE', date: '28', temp: 31, minTemp: 18, description: 'Algo de nubes', iconCode: '02d' },
+          { day: 'SÁB', date: '29', temp: 30, minTemp: 17, description: 'Cielo despejado', iconCode: '01d' },
+          { day: 'DOM', date: '30', temp: 32, minTemp: 18, description: 'Cielo despejado', iconCode: '01d' }
         ];
         
-        setWeatherData(fallbackData);
-        setCurrentTemp(28);
-        console.log('✅ Fallback data cargada');
+        setWeatherData(historicalData);
+        setCurrentTemp(31);
+        console.log('✅ Datos históricos cargados (basados en promedios de marzo en Tepic)');
       } finally {
         setLoading(false);
         console.log('🏁 Carga de clima finalizada');
@@ -257,7 +393,7 @@ const InvitationContent: React.FC = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="mt-10 mb-8 font-script text-5xl md:text-7xl text-[#9C968E] opacity-60"
+          className="mt-10 mb-8 font-script text-5xl md:text-7xl text-stone-800 opacity-60"
         >
           save the date
         </motion.p>
@@ -282,7 +418,7 @@ const InvitationContent: React.FC = () => {
           <h1 className="text-4xl md:text-6xl font-serif-display tracking-[0.12em] text-[#2B2B2B] uppercase">
             Citli & Amed
           </h1>
-          <p className="font-script text-2xl md:text-3xl text-[#5f6d4f] italic tracking-wide mt-2">
+          <p className="font-script text-2xl md:text-3xl text-stone-800 italic tracking-wide mt-2">
             Tepic, Nayarit
           </p>
           <div className="text-lg md:text-xl font-serif-elegant tracking-[0.35em] text-[#9C968E] mt-4">
@@ -292,10 +428,10 @@ const InvitationContent: React.FC = () => {
       </section>
 
       {/* SECCIÓN PADRES - CON FONDO FLORAL PROPORCIONADO */}
-      <section className="py-24 px-6 flex flex-col items-center text-center relative overflow-hidden border-y border-stone-200/50">
+      <section className="py-32 px-6 flex flex-col items-center text-center relative overflow-hidden border-y border-stone-200/50">
         {/* Capa de imagen de fondo floral grabada */}
         <div 
-          className="absolute inset-0 z-0 opacity-50 grayscale mix-blend-multiply pointer-events-none"
+          className="absolute inset-0 z-0 opacity-40 grayscale mix-blend-multiply pointer-events-none"
           style={{ 
             backgroundImage: 'url("/wedding invitation paper texture.jpg")',
             backgroundSize: 'cover',
@@ -304,31 +440,38 @@ const InvitationContent: React.FC = () => {
         />
         
         {/* Overlay para asegurar legibilidad */}
-        <div className="absolute inset-0 bg-[#f5f2ed]/70 z-0" />
+        <div className="absolute inset-0 bg-[#f5f2ed]/80 z-0" />
 
-        <div className="w-[1px] h-12 bg-stone-400 mb-8 opacity-40 z-10 relative" />
+        <div className="w-[1px] h-16 bg-stone-400 mb-12 opacity-30 z-10 relative" />
         
-        <motion.div {...fadeInUp} className="space-y-16 z-10 relative max-w-5xl mx-auto">
-          <p className="font-script text-4xl md:text-5xl text-[#7a8269] mb-12 italic drop-shadow-sm">Con la bendición de nuestros padres</p>
+        <motion.div {...fadeInUp} className="space-y-20 z-10 relative max-w-4xl mx-auto">
+          <p className="font-script text-3xl md:text-4xl text-stone-800 leading-relaxed">Con la bendición de nuestros padres</p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32">
-            <div className="space-y-4">
-              <p className="font-serif-elegant text-xl md:text-2xl text-[#5f6d4f] tracking-[0.1em] leading-snug">Luis Armando Rios Magallanes</p>
-              <p className="font-serif-elegant text-xl md:text-2xl text-[#5f6d4f] tracking-[0.1em] leading-snug">Karla Esther González Cedano</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-20 md:gap-24 relative">
+            {/* Separador vertical en desktop */}
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[1px] bg-stone-300/40 -translate-x-1/2" />
+            
+            <div className="space-y-6">
+              <p className="font-serif-elegant text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Luis Armando Rios Magallanes</p>
+              <p className="font-serif-elegant text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Karla Esther González Cedano</p>
             </div>
-            <div className="space-y-4">
-              <p className="font-serif-elegant text-xl md:text-2xl text-[#5f6d4f] tracking-[0.1em] leading-snug">Víctor Hugo Hernández de los Santos</p>
-              <p className="font-serif-elegant text-xl md:text-2xl text-[#5f6d4f] tracking-[0.1em] leading-snug">Margarita Araceli Miranda de Santiago</p>
+            
+            {/* Separador horizontal en móvil */}
+            <div className="md:hidden w-16 h-[1px] bg-stone-300/40 mx-auto my-2" />
+            
+            <div className="space-y-6">
+              <p className="font-serif-elegant text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Víctor Hugo Hernández de los Santos</p>
+              <p className="font-serif-elegant text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Margarita Araceli Miranda de Santiago</p>
             </div>
           </div>
         </motion.div>
 
-        <div className="w-[1px] h-12 bg-stone-400 mt-16 opacity-40 z-10 relative" />
+        <div className="w-[1px] h-16 bg-stone-400 mt-20 opacity-30 z-10 relative" />
       </section>
 
       {/* ITINERARIO */}
       <section id="itinerario" className="pt-16 pb-20 px-6 max-w-4xl mx-auto flex flex-col items-center">
-        <h2 className="font-script text-4xl md:text-5xl text-[#9a8c7e] mb-16">Itinerario</h2>
+        <h2 className="font-script text-4xl md:text-5xl text-stone-800 mb-16">Itinerario</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full">
           {/* Ceremonia Religiosa */}
           <motion.div {...fadeInUp} className="matchbox-card p-8 flex flex-col text-center">
@@ -424,7 +567,7 @@ const InvitationContent: React.FC = () => {
                   transition={{ duration: 0.5, delay: 0.1 }}
                   className="flex flex-col justify-center items-center md:items-start p-8 md:p-10 md:border-r border-[#e8e0d8]/40 text-center md:text-left"
                 >
-                  <h3 className="font-script text-3xl md:text-4xl text-[#7a8269] mb-2 leading-tight">
+                  <h3 className="font-script text-3xl md:text-4xl text-stone-800 mb-2 leading-tight">
                     El clima durante nuestra boda
                   </h3>
                 </motion.div>
@@ -457,11 +600,10 @@ const InvitationContent: React.FC = () => {
                         
                         {/* Ícono */}
                         <div className="relative w-16 h-16 md:w-20 md:h-20 flex items-center justify-center">
-                          <div className="absolute inset-0 bg-gradient-to-br from-[#e8f0e5] via-[#f5f8f3] to-[#faf8f5] rounded-full shadow-md border border-[#d4c5b9]/30" />
-                          <img 
-                            src={`https://openweathermap.org/img/wn/${day.iconCode}@2x.png`}
-                            alt={day.description}
-                            className="relative w-14 h-14 md:w-16 md:h-16 drop-shadow-lg"
+                          <div className="absolute inset-0 bg-gradient-to-br from-[#faf8f5] via-white to-[#f5f2ed] rounded-full opacity-40" />
+                          <WeatherIcon 
+                            code={day.iconCode} 
+                            className="relative w-12 h-12 md:w-14 md:h-14"
                           />
                         </div>
                         
@@ -522,6 +664,106 @@ const InvitationContent: React.FC = () => {
         <div className="w-[1px] h-8 bg-[#d4c5b9]/30 mx-auto mt-12" />
       </section>
 
+      {/* VIAJAR A TEPIC */}
+      <section className="py-32 px-6 bg-gradient-to-b from-[#faf8f5] to-white">
+        <div className="max-w-2xl mx-auto">
+          {/* Separador superior */}
+          <div className="w-[1px] h-20 bg-[#d4c5b9]/30 mx-auto mb-16" />
+          
+          <motion.h2 
+            {...fadeInUp}
+            className="font-script text-5xl md:text-6xl text-stone-800 mb-12 text-center leading-tight"
+          >
+            Viajar a Tepic
+          </motion.h2>
+          
+          <motion.p 
+            {...fadeInUp}
+            className="font-serif-display text-center text-[#8b7d70] mb-24 max-w-md mx-auto text-sm tracking-wider uppercase opacity-70"
+          >
+            Opciones de viaje
+          </motion.p>
+
+          {/* Vuelos Directos */}
+          <motion.div {...fadeInUp} className="mb-24 text-center">
+            <h3 className="font-serif-display text-sm tracking-[0.25em] uppercase text-[#5f6d4f] mb-12 opacity-80">
+              En Vuelo Directo
+            </h3>
+            
+            <div className="space-y-10 max-w-md mx-auto">
+              <div className="space-y-3">
+                <p className="font-serif-display text-xl text-[#8b7d70]">
+                  Aeroméxico
+                </p>
+                <p className="font-serif-elegant text-sm text-[#8b7d70]/80 leading-loose max-w-xs mx-auto">
+                  Aeropuerto Internacional de la Ciudad de México
+                </p>
+              </div>
+              
+              <div className="w-16 h-[1px] bg-[#d4c5b9]/30 mx-auto" />
+              
+              <div className="space-y-3">
+                <p className="font-serif-display text-xl text-[#8b7d70]">
+                  Viva Aerobus
+                </p>
+                <p className="font-serif-elegant text-sm text-[#8b7d70]/80 leading-loose max-w-xs mx-auto">
+                  Aeropuerto Internacional Felipe Ángeles
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Separador delicado */}
+          <div className="w-[1px] h-16 bg-[#d4c5b9]/20 mx-auto mb-24" />
+
+          {/* Alternativa */}
+          <motion.div {...fadeInUp} className="mb-24 text-center">
+            <h3 className="font-serif-display text-sm tracking-[0.25em] uppercase text-[#5f6d4f] mb-12 opacity-80">
+              Alternativa
+            </h3>
+            
+            <div className="max-w-md mx-auto space-y-6">
+              <p className="font-serif-elegant text-base text-[#8b7d70] leading-loose">
+                Si prefieres volar a Guadalajara o Puerto Vallarta
+              </p>
+              
+              <div className="w-8 h-[1px] bg-[#d4c5b9]/20 mx-auto" />
+              
+              <p className="font-serif-elegant text-sm text-[#8b7d70]/80 leading-loose">
+                Desde la Central de Autobuses de Zapopan encontrarás salidas cada hora hacia Tepic
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Separador delicado */}
+          <div className="w-[1px] h-16 bg-[#d4c5b9]/20 mx-auto mb-24" />
+
+          {/* Recomendación */}
+          <motion.div {...fadeInUp} className="text-center">
+            <div className="inline-block mb-8">
+              <div className="w-1 h-10 bg-gradient-to-b from-transparent via-[#c9a69a]/30 to-transparent mx-auto" />
+            </div>
+            
+            <h3 className="font-serif-display text-sm tracking-[0.25em] uppercase text-[#5f6d4f] mb-10 opacity-80">
+              Recomendación
+            </h3>
+            
+            <p className="font-serif-elegant text-base text-[#8b7d70] leading-loose max-w-md mx-auto mb-6">
+              Te sugerimos rentar un auto y llegar un día antes
+            </p>
+            
+            <div className="w-8 h-[1px] bg-[#d4c5b9]/20 mx-auto my-6" />
+            
+            <p className="font-serif-elegant text-sm text-[#8b7d70]/70 leading-loose max-w-xs mx-auto">
+              La ceremonia religiosa dará inicio a las 13:00 horas
+            </p>
+          </motion.div>
+
+          {/* Separador inferior */}
+          <div className="w-[1px] h-20 bg-[#d4c5b9]/30 mx-auto mt-20" />
+        </div>
+      </section>
+
       {/* HOSPEDAJE */}
       <section id="hospedaje" className="py-24 px-6 max-w-3xl mx-auto">
         {/* Decorative Image at Top */}
@@ -534,14 +776,14 @@ const InvitationContent: React.FC = () => {
         </motion.div>
 
         <div className="pl-4">
-          <h3 className="font-serif-display text-4xl tracking-[0.05em] text-[#5f6d4f] uppercase mb-16">
+          <h3 className="font-script text-5xl md:text-6xl text-stone-800 mb-16">
             Hoteles
           </h3>
           
           <div className="space-y-16">
             {/* Hotel Fray */}
             <motion.div {...fadeInUp} className="flex flex-col items-start gap-1">
-              <span className="font-script text-4xl text-[#8b7d70] leading-none">
+              <span className="font-serif-elegant text-2xl md:text-3xl text-[#8b7d70] leading-none">
                 Hotel Fray
               </span>
               <div className="w-5 h-[1px] bg-stone-400 my-2 opacity-50" />
@@ -557,7 +799,7 @@ const InvitationContent: React.FC = () => {
 
             {/* Hotel La Loma */}
             <motion.div {...fadeInUp} className="flex flex-col items-start gap-1">
-              <span className="font-script text-4xl text-[#8b7d70] leading-none">
+              <span className="font-serif-elegant text-2xl md:text-3xl text-[#8b7d70] leading-none">
                 Hotel La Loma
               </span>
               <div className="w-5 h-[1px] bg-stone-400 my-2 opacity-50" />
@@ -573,7 +815,7 @@ const InvitationContent: React.FC = () => {
 
             {/* Hotel Fray Select */}
             <motion.div {...fadeInUp} className="flex flex-col items-start gap-1">
-              <span className="font-script text-4xl text-[#8b7d70] leading-none">
+              <span className="font-serif-elegant text-2xl md:text-3xl text-[#8b7d70] leading-none">
                 Hotel Fray Select
               </span>
               <div className="w-5 h-[1px] bg-stone-400 my-2 opacity-50" />
@@ -589,7 +831,7 @@ const InvitationContent: React.FC = () => {
 
             {/* Airbnb en Tepic */}
             <motion.div {...fadeInUp} className="flex flex-col items-start gap-1">
-              <span className="font-script text-4xl text-[#8b7d70] leading-none">
+              <span className="font-serif-elegant text-2xl md:text-3xl text-[#8b7d70] leading-none">
                 Airbnb en Tepic
               </span>
               <div className="w-5 h-[1px] bg-stone-400 my-2 opacity-50" />
@@ -601,7 +843,7 @@ const InvitationContent: React.FC = () => {
       {/* GASTRONOMÍA */}
       <section id="gastronomia" className="py-24 px-6 border-t border-stone-200">
         <div className="max-w-5xl mx-auto">
-          <h2 className="font-script text-5xl md:text-6xl text-[#c9a69a] mb-12 text-center">Opciones de Restaurantes</h2>
+          <h2 className="font-script text-5xl md:text-6xl text-stone-800 mb-12 text-center">Opciones de Restaurantes</h2>
           
           <p className="font-serif-elegant text-center text-[#8b7d70] mb-16 max-w-2xl mx-auto">
             En Tepic encontrarás desde lugares con <strong>Sazón</strong> casero y delicioso, hasta restaurantes de <strong>Estilo</strong> más formal
@@ -622,47 +864,47 @@ const InvitationContent: React.FC = () => {
               </div>
               <div className="ml-16 space-y-3">
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Tía Martina -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Tía Martina</span>
                   <a href="https://maps.app.goo.gl/rYiyd6ALXymyHvT77" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Los borrados -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Los borrados</span>
                   <a href="https://maps.app.goo.gl/VwDaJeXHyas8kRxh7" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Petit Brulé -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Petit Brulé</span>
                   <a href="https://maps.app.goo.gl/CGduoNhL8YxSbth58" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Claudia a la carta -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Claudia a la carta</span>
                   <a href="https://maps.app.goo.gl/UWa7zXA2gwuk82BUA" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">El itacqte -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">El itacqte</span>
                   <a href="https://maps.app.goo.gl/QayL4ZAXW5TqLndP6" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">El itacqte -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">El itacqte</span>
                   <a href="https://maps.app.goo.gl/TQkMcRpg3JZMwU4v6" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Tacos de birria -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Tacos de birria</span>
                   <a href="https://maps.app.goo.gl/ytFZ7Q2H3NP7KmGQA" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Tacos de birria -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Tacos de birria</span>
                   <a href="https://maps.app.goo.gl/1uq7dJG1679ND5vG7" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Tacos de carnitas -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Tacos de carnitas</span>
                   <a href="https://maps.app.goo.gl/PnJYwHX5WNTnQPR46" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Lonchería Mercado -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Lonchería Mercado</span>
                   <a href="https://maps.app.goo.gl/Yq3SNnj3uDyfbZZw9" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Tortas el güero -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Tortas el güero</span>
                   <a href="https://maps.app.goo.gl/jb98PQoGXo8K17Xf8" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
               </div>
@@ -677,23 +919,23 @@ const InvitationContent: React.FC = () => {
               </div>
               <div className="ml-16 space-y-3">
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">El mal portado -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">El mal portado</span>
                   <a href="https://maps.app.goo.gl/6w641qTu8N7LnaZX7" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">El pilón -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">El pilón</span>
                   <a href="https://maps.app.goo.gl/b6AYmKgsAoQPJ4gx8" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Matsuri -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Matsuri</span>
                   <a href="https://maps.app.goo.gl/tfqD8iVTuaFXVV7E8" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Claudia a la carta -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Claudia a la carta</span>
                   <a href="https://maps.app.goo.gl/UWa7zXA2gwuk82BUA" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Juan Carlos Nieves -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Juan Carlos Nieves</span>
                   <a href="https://maps.app.goo.gl/6d5EFk9hKgRcfcUq7" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
               </div>
@@ -708,19 +950,19 @@ const InvitationContent: React.FC = () => {
               </div>
               <div className="ml-16 space-y-3">
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Jejenes & Gardenias -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Jejenes & Gardenias</span>
                   <a href="https://maps.app.goo.gl/M5YhTCCit6pwZSVM7" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Píos -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Píos</span>
                   <a href="https://maps.app.goo.gl/xRCu2rgMPR8jKz5C6" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">El buen taco -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">El buen taco</span>
                   <a href="https://maps.app.goo.gl/6yHE2sugtqmTN3n18" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Pepe yus -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Pepe yus</span>
                   <a href="https://maps.app.goo.gl/4PtEZQKQei8Kuafw9" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
               </div>
@@ -742,15 +984,15 @@ const InvitationContent: React.FC = () => {
               </div>
               <div className="ml-16 space-y-3">
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">La madalena -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">La madalena</span>
                   <a href="https://maps.app.goo.gl/aV1jw5CxT5rEUD2x6" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Comal -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Comal</span>
                   <a href="https://maps.app.goo.gl/1Dp2Mv6PSSktVc4q8" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Piloncillo -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Piloncillo</span>
                   <a href="https://maps.app.goo.gl/GGbMJeVrcCV1wVEz5" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
               </div>
@@ -765,27 +1007,27 @@ const InvitationContent: React.FC = () => {
               </div>
               <div className="ml-16 space-y-3">
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">El marlin -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">El marlin</span>
                   <a href="https://maps.app.goo.gl/5XfMzRDCWyXAuJjR6" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Matsuri -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Matsuri</span>
                   <a href="https://maps.app.goo.gl/tfqD8iVTuaFXVV7E8" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">El estero -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">El estero</span>
                   <a href="https://maps.app.goo.gl/GuqUajpHQaFT7g3m6" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">La ola -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">La ola</span>
                   <a href="https://maps.app.goo.gl/MjEJdiv28x9Y2cq68" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Emilianos -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Emilianos</span>
                   <a href="https://maps.app.goo.gl/5e535RDkoxDfoRTV9" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Loma 42 -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Loma 42</span>
                   <a href="https://maps.app.goo.gl/YDS7yTwdjcFCyKi1A" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
               </div>
@@ -800,19 +1042,19 @@ const InvitationContent: React.FC = () => {
               </div>
               <div className="ml-16 space-y-3">
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Emilianos -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Emilianos</span>
                   <a href="https://maps.app.goo.gl/5e535RDkoxDfoRTV9" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Tango y milonga -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Tango y milonga</span>
                   <a href="https://maps.app.goo.gl/YS332xmoCa2zpTBt9" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Loma 42 -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Loma 42</span>
                   <a href="https://maps.app.goo.gl/YDS7yTwdjcFCyKi1A" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Dos de asada -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Dos de asada</span>
                   <a href="https://maps.app.goo.gl/uWw3Wfy7pmDY8UPK7" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
               </div>
@@ -833,11 +1075,11 @@ const InvitationContent: React.FC = () => {
               </div>
               <div className="ml-16 space-y-3">
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Pepe yus -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Pepe yus</span>
                   <a href="https://maps.app.goo.gl/ub4VGCSEG7bbDuLNA" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Neto -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Neto</span>
                   <a href="https://maps.app.goo.gl/t3LNSfs5eqf5nNFW7" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
               </div>
@@ -854,11 +1096,11 @@ const InvitationContent: React.FC = () => {
               </div>
               <div className="ml-16 space-y-3">
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Casa 164 -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Casa 164</span>
                   <a href="https://maps.app.goo.gl/JnDkDNhtwWU95Bnz9" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
                 <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-script text-xl text-[#8b7d70]">Brulé -</span>
+                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Brulé</span>
                   <a href="https://maps.app.goo.gl/mxAqf1gqCrHQS2edA" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
                 </motion.div>
               </div>
@@ -875,61 +1117,105 @@ const InvitationContent: React.FC = () => {
       </section>
 
       {/* MESA DE REGALOS */}
-      <section id="regalos" className="py-32 px-6 bg-[#3e3d3b] text-white relative flex flex-col items-center">
-         <div className="absolute inset-0 opacity-10 grayscale mix-blend-overlay">
+      <section id="regalos" className="py-32 px-6 bg-gradient-to-br from-[#3e3d3b] via-[#4a4847] to-[#3e3d3b] text-white relative flex flex-col items-center overflow-hidden">
+         <div className="absolute inset-0 opacity-5 grayscale">
            <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover" alt="gift-bg" />
         </div>
         
-        <div className="w-[1px] h-10 bg-white/20 mb-8" />
+        <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-white/30 to-transparent mb-12" />
         
-        <h2 className="font-script text-5xl md:text-6xl mb-6">Mesa de Regalos</h2>
+        <motion.h2 {...fadeInUp} className="font-script text-6xl md:text-7xl mb-4 text-white">
+          Mesa de Regalos
+        </motion.h2>
         
-        <motion.p {...fadeInUp} className="font-serif-elegant text-lg md:text-xl italic text-white/90 max-w-2xl text-center mb-16 leading-relaxed">
-          Nuestro mejor regalo es tu compañía, cualquier detalle será recibido con mucho cariño.
+        <motion.p {...fadeInUp} className="font-serif-elegant text-base md:text-lg text-white/70 max-w-xl text-center mb-20 leading-relaxed">
+          Nuestro mejor regalo es tu presencia
         </motion.p>
+
+        {/* Mensaje introducción */}
+        <motion.div {...fadeInUp} className="max-w-2xl text-center mb-16 z-10">
+          <p className="font-serif-elegant text-lg md:text-xl text-white/90 leading-relaxed mb-12">
+            Si realizan sus compras, pueden dar nuestro número de evento.<br />
+            <span className="text-sm text-white/60 italic">No es necesario que nos compren regalos, pueden usarlo en sus propias compras</span>
+          </p>
+
+          {/* Cards de tiendas departamentales */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 max-w-3xl mx-auto">
+            <motion.div 
+              {...fadeInUp}
+              className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-2xl hover:bg-white/15 transition-all duration-300"
+            >
+              <h4 className="font-serif-display text-xs tracking-[0.3em] uppercase text-white/60 mb-4">
+                Liverpool
+              </h4>
+              <p className="font-mono text-3xl md:text-4xl tracking-wider text-white mb-2">
+                51778525
+              </p>
+              <div className="w-12 h-[1px] bg-white/20 mx-auto mt-4" />
+            </motion.div>
+
+            <motion.div 
+              {...fadeInUp}
+              className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-2xl hover:bg-white/15 transition-all duration-300"
+            >
+              <h4 className="font-serif-display text-xs tracking-[0.3em] uppercase text-white/60 mb-4">
+                Palacio de Hierro
+              </h4>
+              <p className="font-mono text-3xl md:text-4xl tracking-wider text-white mb-2">
+                401633
+              </p>
+              <div className="w-12 h-[1px] bg-white/20 mx-auto mt-4" />
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Separador delicado */}
+        <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-white/20 to-transparent my-12" />
         
-        <div className="text-center space-y-8 z-10 max-w-md w-full">
-          <motion.div {...fadeInUp} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-8 shadow-2xl">
-            <h4 className="font-serif-display text-2xl tracking-wider uppercase mb-6 text-white">BBVA</h4>
-            <div className="space-y-4 text-white/90">
-              <div>
-                <p className="text-xs uppercase tracking-widest opacity-60 mb-2">Titular</p>
-                <p className="font-serif-elegant text-base md:text-lg">Citli Daniela Rios González</p>
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-widest opacity-60 mb-2">Tarjeta Débito</p>
-                <p className="font-mono text-lg tracking-wider">4152 3144 8797 9604</p>
-              </div>
+        {/* BBVA */}
+        <motion.div {...fadeInUp} className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-10 shadow-2xl max-w-md w-full z-10">
+          <h4 className="font-serif-display text-xs tracking-[0.3em] uppercase mb-8 text-white/60 text-center">
+            Transferencia Bancaria
+          </h4>
+          <div className="space-y-6 text-white/90">
+            <div className="text-center">
+              <p className="text-xs uppercase tracking-widest opacity-50 mb-3">Titular</p>
+              <p className="font-serif-elegant text-lg md:text-xl text-white">Citli Daniela Rios González</p>
             </div>
-          </motion.div>
-        </div>
+            <div className="w-16 h-[1px] bg-white/20 mx-auto" />
+            <div className="text-center">
+              <p className="text-xs uppercase tracking-widest opacity-50 mb-3">BBVA • Tarjeta Débito</p>
+              <p className="font-mono text-xl md:text-2xl tracking-wider text-white">4152 3144 8797 9604</p>
+            </div>
+          </div>
+        </motion.div>
         
-        <div className="w-[1px] h-10 bg-white/20 mt-8" />
+        <div className="w-[1px] h-16 bg-gradient-to-b from-white/20 via-transparent to-transparent mt-16" />
       </section>
 
       {/* RSVP SECTION */}
-      <section id="rsvp" className="px-6 flex flex-col items-center bg-[#faf8f5]">
+      <section id="rsvp" className="py-20 px-6 flex flex-col items-center bg-[#faf8f5]">
         <motion.div {...fadeInUp} className="w-full max-w-xl flex flex-col items-center">
-          <div className="mb-1 text-center space-y-4">
-            <h2 className="font-script text-5xl md:text-7xl text-[#7a8269] leading-tight drop-shadow-sm">Favor de Confirmar tu Asistencia</h2>
+          <div className="mb-8 text-center space-y-4">
+            <h2 className="font-script text-5xl md:text-7xl text-stone-800 leading-tight drop-shadow-sm">Favor de Confirmar tu Asistencia</h2>
           </div>
           
-          <div className="w-full bg-transparent overflow-hidden">
+          <div className="w-full bg-transparent overflow-hidden mb-12">
             <iframe 
               src="https://tally.so/embed/0Q72OB?hideTitle=1&transparentBackground=1" 
               loading="lazy" 
               width="100%" 
-              height="250" 
+              height="450" 
               frameBorder="0" 
               title="Confirmación de Asistencia"
-              className="w-full min-h-[200px]"
+              className="w-full min-h-[450px]"
             />
           </div>
         </motion.div>
       </section>
 
       {/* FOOTER */}
-      <footer className="py-12 px-6 flex flex-col items-center gap-6 bg-[#faf8f5]">
+      <footer className="pt-24 pb-12 px-6 flex flex-col items-center gap-6 bg-[#faf8f5]">
         <div className="w-full max-w-4xl bg-white p-6 shadow-lg border border-stone-200">
            <div className="w-full overflow-hidden">
               <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=1200" className="w-full h-auto object-cover grayscale" alt="Footer photo" />

@@ -145,7 +145,7 @@ const IntroAnimation: React.FC<IntroProps> = ({ onOpen }) => {
         >
           <div className="relative">
             {/* Texto manuscrito inclinado */}
-            <p className="font-handwriting text-[#7a8d6f]/70 text-base md:text-lg leading-tight -rotate-[15deg] -translate-x-16 translate-y-4 max-w-[150px] text-center select-none">
+            <p className="font-sans-clean text-[#7a8d6f]/70 text-base md:text-lg leading-tight -rotate-[15deg] -translate-x-16 translate-y-4 max-w-[150px] text-center select-none italic">
               Haz click en el sello para abrir la invitación
             </p>
 

@@ -85,10 +85,10 @@ const DressCodeSection: React.FC = () => {
       <motion.div {...fadeInUp} className="max-w-5xl w-full z-10 relative">
         {/* Title and subtitle */}
         <div className="text-center mb-12 space-y-4">
-          <h2 className="font-serif-display text-4xl md:text-5xl tracking-[0.1em] text-stone-800 uppercase">
+          <h2 className="font-script text-5xl md:text-6xl text-stone-800">
             Dress Code
           </h2>
-          <p className="font-script text-3xl md:text-4xl text-[#a68b7c] italic">
+          <p className="font-serif-elegant text-xl md:text-2xl text-[#a68b7c] italic">
             Inspiración para tu outfit
           </p>
           <div className="w-16 h-[1px] bg-stone-400 mx-auto mt-6 opacity-40" />
