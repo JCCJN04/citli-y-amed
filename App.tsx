@@ -11,11 +11,28 @@ const App: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  // Función para intentar reproducir el audio
+  const attemptPlay = async () => {
+    if (audioRef.current) {
+      try {
+        await audioRef.current.play();
+        setIsPlaying(true);
+      } catch (error) {
+        console.log('Autoplay bloqueado por el navegador:', error);
+        setIsPlaying(false);
+      }
+    }
+  };
+
   // Ya no usamos useEffect con timeout para que sea el usuario quien abra la invitación
   const handleOpen = () => {
     // Esperamos un poco después de que la animación de apertura termine en el componente Intro
     setTimeout(() => {
       setShowContent(true);
+      // Intentar reproducir música automáticamente después de la interacción del usuario
+      setTimeout(() => {
+        attemptPlay();
+      }, 500);
     }, 1200);
   };
 
@@ -24,7 +41,9 @@ const App: React.FC = () => {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
-        audioRef.current.play();
+        audioRef.current.play().catch(err => {
+          console.log('Error al reproducir:', err);
+        });
       }
       setIsPlaying(!isPlaying);
     }
@@ -37,15 +56,21 @@ const App: React.FC = () => {
     const handleEnded = () => setIsPlaying(false);
     const handlePause = () => setIsPlaying(false);
     const handlePlay = () => setIsPlaying(true);
+    const handleError = (e: Event) => {
+      console.error('Error de audio:', e);
+      setIsPlaying(false);
+    };
 
     audio.addEventListener('ended', handleEnded);
     audio.addEventListener('pause', handlePause);
     audio.addEventListener('play', handlePlay);
+    audio.addEventListener('error', handleError);
 
     return () => {
       audio.removeEventListener('ended', handleEnded);
       audio.removeEventListener('pause', handlePause);
       audio.removeEventListener('play', handlePlay);
+      audio.removeEventListener('error', handleError);
     };
   }, []);
 
@@ -97,8 +122,15 @@ const App: React.FC = () => {
       )}
 
       {/* Audio element */}
-      <audio ref={audioRef} loop>
+      <audio 
+        ref={audioRef} 
+        loop 
+        preload="auto"
+        playsInline
+      >
         <source src={asset('Mina - Nessuno.mp4')} type="audio/mp4" />
+        <source src={asset('Mina - Nessuno.mp4')} type="audio/mpeg" />
+        Tu navegador no soporta la reproducción de audio.
       </audio>
     </main>
   );

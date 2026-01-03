@@ -429,7 +429,7 @@ const InvitationContent: React.FC = () => {
       </section>
 
       {/* SECCIÓN PADRES - CON FONDO FLORAL PROPORCIONADO */}
-      <section className="py-32 px-6 flex flex-col items-center text-center relative overflow-hidden border-y border-stone-200/50">
+      <section className="py-16 px-6 flex flex-col items-center text-center relative overflow-hidden border-y border-stone-200/50">
         {/* Capa de imagen de fondo floral grabada */}
         <div 
           className="absolute inset-0 z-0 opacity-40 grayscale mix-blend-multiply pointer-events-none"
@@ -445,33 +445,35 @@ const InvitationContent: React.FC = () => {
 
         <div className="w-[1px] h-16 bg-stone-400 mb-12 opacity-30 z-10 relative" />
         
-        <motion.div {...fadeInUp} className="space-y-20 z-10 relative max-w-4xl mx-auto">
+        <motion.div {...fadeInUp} className="space-y-12 z-10 relative max-w-4xl mx-auto">
           <p className="font-script text-3xl md:text-4xl text-stone-800 leading-relaxed">Con la bendición de nuestros padres</p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-20 md:gap-24 relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-20 relative">
             {/* Separador vertical en desktop */}
             <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[1px] bg-stone-300/40 -translate-x-1/2" />
             
-            <div className="space-y-6">
+            <div className="flex flex-col items-center">
               <p className="font-serif-elegant text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Luis Armando Rios Magallanes</p>
+              <p className="font-serif-elegant text-2xl md:text-3xl text-[#5f6d4f] my-2">&</p>
               <p className="font-serif-elegant text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Karla Esther González Cedano</p>
             </div>
             
             {/* Separador horizontal en móvil */}
             <div className="md:hidden w-16 h-[1px] bg-stone-300/40 mx-auto my-2" />
             
-            <div className="space-y-6">
+            <div className="flex flex-col items-center">
               <p className="font-serif-elegant text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Víctor Hugo Hernández de los Santos</p>
+              <p className="font-serif-elegant text-2xl md:text-3xl text-[#5f6d4f] my-2">&</p>
               <p className="font-serif-elegant text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Margarita Araceli Miranda de Santiago</p>
             </div>
           </div>
         </motion.div>
 
-        <div className="w-[1px] h-16 bg-stone-400 mt-20 opacity-30 z-10 relative" />
+        <div className="w-[1px] h-16 bg-stone-400 mt-12 opacity-30 z-10 relative" />
       </section>
 
       {/* ITINERARIO */}
-      <section id="itinerario" className="pt-16 pb-20 px-6 max-w-4xl mx-auto flex flex-col items-center">
+      <section id="itinerario" className="pt-16 pb-8 px-6 max-w-4xl mx-auto flex flex-col items-center">
         <h2 className="font-script text-4xl md:text-5xl text-stone-800 mb-16">Itinerario</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full">
           {/* Ceremonia Religiosa */}
@@ -536,9 +538,9 @@ const InvitationContent: React.FC = () => {
       </div>
 
       {/* CLIMA NAYARIT - Diseño Editorial Horizontal */}
-      <section className="relative py-16 px-6 overflow-hidden bg-gradient-to-br from-[#f5f2ed] via-[#faf8f5] to-[#f0ede8]">
+      <section className="relative py-8 px-6 overflow-hidden bg-gradient-to-br from-[#f5f2ed] via-[#faf8f5] to-[#f0ede8]">
         {/* Separador superior */}
-        <div className="w-[1px] h-8 bg-[#d4c5b9]/30 mx-auto mb-12" />
+        <div className="w-[1px] h-4 bg-[#d4c5b9]/30 mx-auto mb-6" />
         
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -662,32 +664,32 @@ const InvitationContent: React.FC = () => {
         </motion.div>
         
         {/* Separador inferior */}
-        <div className="w-[1px] h-8 bg-[#d4c5b9]/30 mx-auto mt-12" />
+        <div className="w-[1px] h-4 bg-[#d4c5b9]/30 mx-auto mt-6" />
       </section>
 
       {/* VIAJAR A TEPIC */}
-      <section className="py-32 px-6 bg-gradient-to-b from-[#faf8f5] to-white">
+      <section className="py-16 px-6 bg-gradient-to-b from-[#faf8f5] to-white">
         <div className="max-w-2xl mx-auto">
           {/* Separador superior */}
-          <div className="w-[1px] h-20 bg-[#d4c5b9]/30 mx-auto mb-16" />
+          <div className="w-[1px] h-8 bg-[#d4c5b9]/30 mx-auto mb-8" />
           
           <motion.h2 
             {...fadeInUp}
-            className="font-script text-5xl md:text-6xl text-stone-800 mb-12 text-center leading-tight"
+            className="font-script text-5xl md:text-6xl text-stone-800 mb-8 text-center leading-tight"
           >
             Viajar a Tepic
           </motion.h2>
           
           <motion.p 
             {...fadeInUp}
-            className="font-serif-display text-center text-[#8b7d70] mb-24 max-w-md mx-auto text-sm tracking-wider uppercase opacity-70"
+            className="font-serif-display text-center text-[#8b7d70] mb-16 max-w-md mx-auto text-sm tracking-wider uppercase opacity-70"
           >
             Opciones de viaje
           </motion.p>
 
           {/* Vuelos Directos */}
-          <motion.div {...fadeInUp} className="mb-24 text-center">
-            <h3 className="font-serif-display text-sm tracking-[0.25em] uppercase text-[#5f6d4f] mb-12 opacity-80">
+          <motion.div {...fadeInUp} className="mb-16 text-center">
+            <h3 className="font-serif-display text-sm tracking-[0.25em] uppercase text-[#5f6d4f] mb-8 opacity-80">
               En Vuelo Directo
             </h3>
             
@@ -715,11 +717,11 @@ const InvitationContent: React.FC = () => {
           </motion.div>
 
           {/* Separador delicado */}
-          <div className="w-[1px] h-16 bg-[#d4c5b9]/20 mx-auto mb-24" />
+          <div className="w-[1px] h-8 bg-[#d4c5b9]/20 mx-auto mb-12" />
 
           {/* Alternativa */}
-          <motion.div {...fadeInUp} className="mb-24 text-center">
-            <h3 className="font-serif-display text-sm tracking-[0.25em] uppercase text-[#5f6d4f] mb-12 opacity-80">
+          <motion.div {...fadeInUp} className="mb-16 text-center">
+            <h3 className="font-serif-display text-sm tracking-[0.25em] uppercase text-[#5f6d4f] mb-8 opacity-80">
               Alternativa
             </h3>
             
@@ -737,15 +739,15 @@ const InvitationContent: React.FC = () => {
           </motion.div>
 
           {/* Separador delicado */}
-          <div className="w-[1px] h-16 bg-[#d4c5b9]/20 mx-auto mb-24" />
+          <div className="w-[1px] h-8 bg-[#d4c5b9]/20 mx-auto mb-12" />
 
           {/* Recomendación */}
           <motion.div {...fadeInUp} className="text-center">
-            <div className="inline-block mb-8">
-              <div className="w-1 h-10 bg-gradient-to-b from-transparent via-[#c9a69a]/30 to-transparent mx-auto" />
+            <div className="inline-block mb-6">
+              <div className="w-1 h-8 bg-gradient-to-b from-transparent via-[#c9a69a]/30 to-transparent mx-auto" />
             </div>
             
-            <h3 className="font-serif-display text-sm tracking-[0.25em] uppercase text-[#5f6d4f] mb-10 opacity-80">
+            <h3 className="font-serif-display text-sm tracking-[0.25em] uppercase text-[#5f6d4f] mb-6 opacity-80">
               Recomendación
             </h3>
             
@@ -761,7 +763,7 @@ const InvitationContent: React.FC = () => {
           </motion.div>
 
           {/* Separador inferior */}
-          <div className="w-[1px] h-20 bg-[#d4c5b9]/30 mx-auto mt-20" />
+          <div className="w-[1px] h-8 bg-[#d4c5b9]/30 mx-auto mt-12" />
         </div>
       </section>
 
@@ -1125,7 +1127,7 @@ const InvitationContent: React.FC = () => {
         
         <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-white/30 to-transparent mb-12" />
         
-        <motion.h2 {...fadeInUp} className="font-script text-6xl md:text-7xl mb-4 text-white">
+        <motion.h2 {...fadeInUp} className="font-script text-6xl md:text-7xl mb-4 text-white text-center">
           Mesa de Regalos
         </motion.h2>
         
