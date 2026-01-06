@@ -10,6 +10,14 @@ const App: React.FC = () => {
   const [showContent, setShowContent] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+  
+  // Detectar si se quiere la versión a color desde la URL
+  const [isColorVersion, setIsColorVersion] = useState(false);
+  
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setIsColorVersion(params.get('color') === 'true');
+  }, []);
 
   // Función para intentar reproducir el audio
   const attemptPlay = async () => {
@@ -94,7 +102,7 @@ const App: React.FC = () => {
             transition={{ duration: 1.5 }}
             className="w-full"
           >
-            <InvitationContent />
+            <InvitationContent colorMode={isColorVersion} />
           </motion.div>
         )}
       </AnimatePresence>

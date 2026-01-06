@@ -6,20 +6,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Boda Citli & Amed</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&family=Cormorant+Garamond:wght@600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+      @font-face {
+        font-family: 'Migra';
+        src: url('/fonts/Migra Font Family/Migra - Free for Personal Use/Migra-Extralight.woff2') format('woff2'),
+             url('/fonts/Migra Font Family/Migra - Free for Personal Use/Migra-Extralight.woff') format('woff'),
+             url('/fonts/Migra Font Family/Migra - Free for Personal Use/Migra-Extralight.ttf') format('truetype');
+        font-weight: 200;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Migra';
+        src: url('/fonts/Migra Font Family/Migra - Free for Personal Use/Migra-Extrabold.woff2') format('woff2'),
+             url('/fonts/Migra Font Family/Migra - Free for Personal Use/Migra-Extrabold.woff') format('woff'),
+             url('/fonts/Migra Font Family/Migra - Free for Personal Use/Migra-Extrabold.ttf') format('truetype');
+        font-weight: 800;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Breathing';
+        src: url('/fonts/breathing/Breathing Personal Use Only.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Road Race';
+        src: url('/fonts/road-race/ttf/road-race-road-race-regular-stamp-400.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+
       body {
         background-color: #faf8f5;
         margin: 0;
         overflow-x: hidden;
         color: #3e3d3b;
       }
-      .font-serif-elegant { font-family: 'Libre Baskerville', serif; letter-spacing: 0.02em; }
-      .font-serif-display { font-family: 'Cormorant Garamond', serif; font-weight: 600; letter-spacing: 0.05em; }
-      .font-sans-clean { font-family: 'Montserrat', sans-serif; letter-spacing: 0.03em; }
-      .font-script { font-family: 'Monsieur La Doulaise', cursive; }
+      .font-serif-elegant { font-family: 'Migra', serif; letter-spacing: 0.02em; }
+      .font-serif-display { font-family: 'Breathing', cursive; font-weight: normal; letter-spacing: 0.05em; }
+      .font-sans-clean { font-family: 'Road Race', sans-serif; letter-spacing: 0.03em; }
+      .font-script { font-family: 'Breathing', cursive; }
       
       .vertical-text {
         writing-mode: vertical-rl;
@@ -46,7 +79,7 @@
         background-color: #5f6d4f;
         color: white;
         padding: 4px 20px;
-        font-family: 'Montserrat', sans-serif;
+        font-family: 'Road Race', sans-serif;
         font-size: 10px;
         letter-spacing: 0.2em;
         text-transform: uppercase;
@@ -60,6 +93,43 @@
         background: white;
         box-shadow: 0 4px 15px rgba(95,109,79,0.08);
         border: 1px solid rgba(212,197,185,0.3);
+      }
+
+      @keyframes cardGradient {
+        0% { background-position: 0% 10%; }
+        50% { background-position: 100% 91%; }
+        100% { background-position: 0% 10%; }
+      }
+
+      @keyframes cardAnimation {
+        60% {
+          background-size: 400px 267px;
+          background-position-x: 60%;
+          background-position-y: 60%;
+        }
+      }
+
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Mejorar calidad de imágenes - Estilo Framer */
+      img {
+        display: block;
+        object-fit: cover;
+        object-position: center center;
+        image-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      .grayscale {
+        filter: grayscale(100%);
       }
     </style>
     <!-- Script de Tally para altura dinámica -->

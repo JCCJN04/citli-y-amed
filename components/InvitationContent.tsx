@@ -5,6 +5,10 @@ import { Menu, X } from 'lucide-react';
 import DressCodeSection from './DressCodeSection';
 import { asset } from '@/utils/asset';
 
+interface InvitationContentProps {
+  colorMode?: boolean;
+}
+
 // Declaración para que TypeScript no se queje del objeto global Tally
 declare global {
   interface Window {
@@ -164,11 +168,15 @@ const fadeInUp = {
   transition: { duration: 0.8, ease: [0.19, 1, 0.22, 1] as [number, number, number, number] }
 };
 
-const InvitationContent: React.FC = () => {
+const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [weatherData, setWeatherData] = useState<WeatherDay[]>([]);
   const [currentTemp, setCurrentTemp] = useState<number>(25);
   const [loading, setLoading] = useState(true);
+  
+  // State para el slider de fotos
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+  const photos = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
 
   // ============================================
   // MÓDULO DE CLIMA - OpenWeatherMap API
@@ -283,6 +291,15 @@ const InvitationContent: React.FC = () => {
 
     fetchWeather();
   }, []);
+  
+  // Auto-cambiar fotos cada 2.5 segundos
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentPhotoIndex((prev) => (prev + 1) % photos.length);
+    }, 2500);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   // Asegurar que Tally se cargue al montar el componente
   useEffect(() => {
@@ -325,7 +342,7 @@ const InvitationContent: React.FC = () => {
         >
           <Menu className="w-6 h-6" />
         </button>
-        <img src={asset('Logo Citli y Amed .png')} alt="C&A" className="h-16 w-auto" />
+        <img src={asset('Logo Citli y Amed .png')} alt="C&A" className="h-16 w-auto" decoding="async" loading="eager" />
       </header>
 
       {/* MENU OVERLAY */}
@@ -353,7 +370,7 @@ const InvitationContent: React.FC = () => {
                 >
                   <X className="w-6 h-6" />
                 </button>
-                <img src={asset('Logo Citli y Amed .png')} alt="C&A" className="h-16 w-auto" />
+                <img src={asset('Logo Citli y Amed .png')} alt="C&A" className="h-16 w-auto" decoding="async" loading="eager" />
               </div>
               <nav className="flex flex-col gap-6 px-10">
                 {menuItems.map((item, index) => (
@@ -382,6 +399,8 @@ const InvitationContent: React.FC = () => {
             src={asset('fondo.png')}
             className="w-full h-full object-cover opacity-95"
             alt="bg"
+            decoding="async"
+            loading="eager"
           />
         </div>
 
@@ -396,7 +415,6 @@ const InvitationContent: React.FC = () => {
           transition={{ duration: 1, delay: 0.2 }}
           className="mt-10 mb-8 font-script text-5xl md:text-7xl text-stone-800 opacity-60"
         >
-          save the date
         </motion.p>
 
         {/* Polaroid */}
@@ -406,8 +424,15 @@ const InvitationContent: React.FC = () => {
           transition={{ duration: 1.2, delay: 0.35 }}
           className="bg-white p-4 pb-16 max-w-[340px] md:max-w-[420px] border border-black/10 shadow-[0_28px_55px_-38px_rgba(0,0,0,0.35)]"
         >
-          <div className="aspect-[3/4] overflow-hidden grayscale contrast-125">
-            <img src={asset('foto1.png')} className="w-full h-full object-cover" alt="Couple" />
+          <div className={`aspect-[3/4] overflow-hidden ${colorMode ? '' : 'grayscale'} contrast-125`}>
+            <img 
+              src={asset('foto1.jpeg')} 
+              className="w-full h-full object-cover" 
+              alt="Couple" 
+              decoding="async"
+              loading="eager"
+              style={{ display: 'block', width: '100%', height: '100%', borderRadius: 'inherit', objectPosition: 'center center', objectFit: 'cover' }}
+            />
           </div>
         </motion.div>
 
@@ -432,7 +457,7 @@ const InvitationContent: React.FC = () => {
       <section className="py-16 px-6 flex flex-col items-center text-center relative overflow-hidden border-y border-stone-200/50">
         {/* Capa de imagen de fondo floral grabada */}
         <div 
-          className="absolute inset-0 z-0 opacity-40 grayscale mix-blend-multiply pointer-events-none"
+          className={`absolute inset-0 z-0 opacity-40 ${colorMode ? '' : 'grayscale'} mix-blend-multiply pointer-events-none`}
           style={{ 
             backgroundImage: `url(${asset('wedding invitation paper texture.jpg')})`,
             backgroundSize: 'cover',
@@ -446,7 +471,7 @@ const InvitationContent: React.FC = () => {
         <div className="w-[1px] h-16 bg-stone-400 mb-12 opacity-30 z-10 relative" />
         
         <motion.div {...fadeInUp} className="space-y-12 z-10 relative max-w-4xl mx-auto">
-          <p className="font-script text-3xl md:text-4xl text-stone-800 leading-relaxed">Con la bendición de nuestros padres</p>
+          <p className="font-script text-3xl md:text-4xl text-stone-800 leading-relaxed">Con la bendición de Dios, nuestros abuelos y nuestros padres</p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-20 relative">
             {/* Separador vertical en desktop */}
@@ -478,8 +503,8 @@ const InvitationContent: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full">
           {/* Ceremonia Religiosa */}
           <motion.div {...fadeInUp} className="matchbox-card p-8 flex flex-col text-center">
-            <div className="w-full h-56 mb-6 overflow-hidden flex items-center justify-center bg-stone-50">
-              <img src={asset('iglesia.png')} className="w-full h-full object-contain grayscale" alt="Iglesia" />
+            <div className="w-full h-56 mb-6 overflow-hidden flex items-center justify-center bg-white">
+              <img src={asset('iglesia.png')} className={`w-full h-full object-contain ${colorMode ? '' : 'grayscale'}`} alt="Iglesia" decoding="async" loading="lazy" />
             </div>
             <h3 className="font-serif-display text-2xl tracking-wider uppercase mb-4 text-[#5f6d4f]">Ceremonia Religiosa</h3>
             <p className="font-serif-elegant italic text-[#9a8c7e] mb-6 text-lg">13:00 H</p>
@@ -505,8 +530,8 @@ const InvitationContent: React.FC = () => {
 
           {/* Ceremonia Civil y Recepción */}
           <motion.div {...fadeInUp} className="matchbox-card p-8 flex flex-col text-center">
-            <div className="w-full h-56 mb-6 overflow-hidden flex items-center justify-center bg-stone-50">
-              <img src={asset('ceremonia.png')} className="w-full h-full object-contain grayscale" alt="Ceremonia" />
+            <div className="w-full h-56 mb-6 overflow-hidden flex items-center justify-center bg-white">
+              <img src={asset('ceremonia.png')} className={`w-full h-full object-contain ${colorMode ? '' : 'grayscale'}`} alt="Ceremonia" decoding="async" loading="lazy" />
             </div>
             <h3 className="font-serif-display text-2xl tracking-wider uppercase mb-4 text-[#5f6d4f]">Ceremonia Civil y Recepción</h3>
             <p className="font-serif-elegant italic text-[#9a8c7e] mb-6 text-lg">15:00 H</p>
@@ -684,7 +709,7 @@ const InvitationContent: React.FC = () => {
             {...fadeInUp}
             className="font-serif-display text-center text-[#8b7d70] mb-16 max-w-md mx-auto text-sm tracking-wider uppercase opacity-70"
           >
-            Opciones de viaje
+            Opciones de  viaje
           </motion.p>
 
           {/* Vuelos Directos */}
@@ -772,8 +797,8 @@ const InvitationContent: React.FC = () => {
         {/* Decorative Image at Top */}
         <motion.div {...fadeInUp} className="flex justify-start pl-4 mb-16">
           <div className="bg-white p-2 pb-10 shadow-lg rotate-1 border border-stone-100 max-w-[400px]">
-            <div className="aspect-square overflow-hidden grayscale opacity-80">
-              <img src={asset('foto4.png')} alt="Detail" />
+            <div className={`aspect-square overflow-hidden ${colorMode ? '' : 'grayscale'} opacity-80`}>
+              <img src={asset('foto4.jpeg')} alt="Detail" decoding="async" loading="lazy" style={{ display: 'block', width: '100%', height: '100%', borderRadius: 'inherit', objectPosition: 'center center', objectFit: 'cover' }} />
             </div>
           </div>
         </motion.div>
@@ -840,6 +865,79 @@ const InvitationContent: React.FC = () => {
               <div className="w-5 h-[1px] bg-stone-400 my-2 opacity-50" />
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* RECOMENDACIONES PARA EL EVENTO */}
+      <section className="py-24 px-6 border-t border-stone-200 bg-[#f5f0eb]">
+        <div className="max-w-4xl mx-auto">
+          <motion.h2 
+            {...fadeInUp}
+            className="font-script text-4xl md:text-5xl text-stone-800 mb-6 text-center"
+          >
+            Recomendaciones para el magno evento
+          </motion.h2>
+          
+          <motion.div 
+            {...fadeInUp}
+            className="bg-white rounded-lg shadow-sm border border-stone-200 p-8 md:p-12 space-y-6"
+          >
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#5f6d4f] mt-2"></div>
+              <p className="font-serif-elegant text-base md:text-lg text-stone-700">
+                Recuerda que es una <strong>boda maratónica</strong>
+              </p>
+            </div>
+            
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#5f6d4f] mt-2"></div>
+              <p className="font-serif-elegant text-base md:text-lg text-stone-700">
+                Desayuna muy bien
+              </p>
+            </div>
+            
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#5f6d4f] mt-2"></div>
+              <p className="font-serif-elegant text-base md:text-lg text-stone-700">
+                Durante el día hará <strong>calor</strong>
+              </p>
+            </div>
+            
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#5f6d4f] mt-2"></div>
+              <p className="font-serif-elegant text-base md:text-lg text-stone-700">
+                Durante la tarde/noche hará <strong>frío</strong>
+              </p>
+            </div>
+            
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#5f6d4f] mt-2"></div>
+              <p className="font-serif-elegant text-base md:text-lg text-stone-700">
+                Trae <strong>zapatos cómodos</strong> (es jardín y se pondrá húmedo)
+              </p>
+            </div>
+            
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#5f6d4f] mt-2"></div>
+              <p className="font-serif-elegant text-base md:text-lg text-stone-700">
+                Trae <strong>abrigo</strong> y prepárate para la neblina (Tepic Londinense)
+              </p>
+            </div>
+            
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#5f6d4f] mt-2"></div>
+              <p className="font-serif-elegant text-base md:text-lg text-stone-700">
+                Puedes llegar en taxi, Uber, didi, indriver
+              </p>
+            </div>
+            
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#5f6d4f] mt-2"></div>
+              <p className="font-serif-elegant text-base md:text-lg text-stone-700">
+                Habrá <strong>vallet parking</strong>
+              </p>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -1094,7 +1192,7 @@ const InvitationContent: React.FC = () => {
             <div className="mb-16 relative">
               <div className="absolute left-0 top-0 h-full flex items-center justify-center" style={{ width: '20px' }}>
                 <h4 className="font-serif-display text-base font-semibold tracking-[0.3em] uppercase text-[#5f6d4f] opacity-80 whitespace-nowrap" style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}>
-                  COFFEE SHOPS
+                  Cafeterías
                 </h4>
               </div>
               <div className="ml-16 space-y-3">
@@ -1113,7 +1211,7 @@ const InvitationContent: React.FC = () => {
           {/* Decorative Image */}
           <div className="mt-16 flex justify-center">
              <div className="bg-white p-2 shadow-md -rotate-2 border border-stone-50 max-w-[320px]">
-                <img src={asset('foto3.png')} className="grayscale contrast-125" alt="Cafe" />
+                <img src={asset('foto3.jpeg')} className={`${colorMode ? '' : 'grayscale'} contrast-125`} alt="Cafe" decoding="async" loading="lazy" style={{ display: 'block', width: '100%', height: '100%', borderRadius: 'inherit', objectPosition: 'center center', objectFit: 'cover' }} />
              </div>
           </div>
         </div>
@@ -1121,19 +1219,157 @@ const InvitationContent: React.FC = () => {
 
       {/* MESA DE REGALOS */}
       <section id="regalos" className="py-32 px-6 bg-gradient-to-br from-[#3e3d3b] via-[#4a4847] to-[#3e3d3b] text-white relative flex flex-col items-center overflow-hidden">
-         <div className="absolute inset-0 opacity-5 grayscale">
-           <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover" alt="gift-bg" />
+         <div className={`absolute inset-0 opacity-5 ${colorMode ? '' : 'grayscale'}`}>
+           <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover" alt="gift-bg" decoding="async" loading="lazy" />
         </div>
         
         <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-white/30 to-transparent mb-12" />
         
         <motion.h2 {...fadeInUp} className="font-script text-6xl md:text-7xl mb-4 text-white text-center">
-          Mesa de Regalos
+          Sugerencia de regalo
         </motion.h2>
         
-        <motion.p {...fadeInUp} className="font-serif-elegant text-base md:text-lg text-white/70 max-w-xl text-center mb-20 leading-relaxed">
-          Nuestro mejor regalo es tu presencia
+        <motion.p {...fadeInUp} className="font-serif-elegant text-base md:text-lg text-white/90 max-w-2xl text-center mb-12 leading-relaxed">
+          Tu presencia es el regalo más importante para nosotros. Si desean hacernos un detalle, les agradecemos muchísimo nos apoyen a crear recuerdos en nuestra luna de miel
         </motion.p>
+
+        {/* BBVA - Tarjeta Bancaria Visual */}
+        <motion.div 
+          {...fadeInUp} 
+          className="relative w-full min-w-[311px] max-w-[360px] h-[227px] rounded-[10px] box-border p-6 grid grid-rows-[1fr_auto] shadow-[0_0px_8px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.12),0_4px_20px_rgba(0,0,0,0.12),0_12px_28px_rgba(0,0,0,0.12)] mb-6 z-10"
+          style={{
+            background: 'linear-gradient(135deg, #2a2a2a 0%, #404040 50%, #1a1a1a 100%)',
+            backgroundSize: '360px 227px',
+            color: 'white',
+            fontFamily: 'AxLLCircular, Helvetica, Arial, sans-serif',
+            animation: 'cardAnimation 10s infinite',
+            transform: 'translateZ(0)'
+          }}
+        >
+          {/* ::before pseudo-element - Sombra interna */}
+          <div 
+            className="absolute inset-0 rounded-[10px] pointer-events-none z-[1]"
+            style={{
+              boxShadow: '0 -1px 0 0 rgba(255, 255, 255, 0.9), 0 1px 0 0 rgba(0, 0, 0, 0.2)'
+            }}
+          />
+          
+          {/* ::after pseudo-element - Gradiente holográfico animado */}
+          <div 
+            className="absolute inset-0 rounded-[10px] pointer-events-none"
+            style={{
+              background: 'linear-gradient(120deg, rgba(255, 255, 255, 0.02) 30%, rgba(255, 255, 255, 0.25) 40%, rgba(255, 255, 255, 0.08) 40%), linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.3))',
+              backgroundSize: '150% 150%',
+              animation: 'cardGradient 45s ease-in-out infinite',
+              transform: 'translateZ(0)'
+            }}
+          />
+          
+          {/* card-top */}
+          <div className="flex justify-between items-start z-[1] relative">
+            <span className="text-sm uppercase tracking-[1.5px] font-medium text-white/90">
+              Débito
+            </span>
+            <img 
+              src={asset('/bbva.png')} 
+              alt="BBVA" 
+              className="h-[40px]"
+              style={{
+                filter: 'drop-shadow(0px 1px 0px rgba(255, 255, 255, 0.3)) drop-shadow(0 2px 16px rgba(0, 0, 0, 0.12)) drop-shadow(0px 0px 12px rgba(255, 255, 255, 1))'
+              }}
+            />
+          </div>
+          
+          {/* card-bottom */}
+          <div className="flex justify-between z-[1] relative">
+            <div className="grid gap-2">
+              <p className="m-0 text-[10px] uppercase font-medium tracking-[1.5px]">
+                Tarjeta
+              </p>
+              <p className="m-0 text-base tracking-[1.5px] font-bold max-w-[232px] whitespace-nowrap overflow-hidden text-ellipsis" style={{ textShadow: '0 0px 8px rgba(0, 0, 0, 0.12)' }}>
+                4152 3144 8797 9604
+              </p>
+              <p className="m-0 text-[10px] uppercase font-medium tracking-[1.5px]">
+                Titular
+              </p>
+              <p className="m-0 text-sm tracking-[1.5px] font-bold leading-tight" style={{ textShadow: '0 0px 8px rgba(0, 0, 0, 0.12)' }}>
+                Citli Daniela Rios González
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Separador delicado */}
+        <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-white/20 to-transparent my-12" />
+
+        {/* Banamex - Tarjeta Bancaria Visual */}
+        <motion.div 
+          {...fadeInUp} 
+          className="relative w-full min-w-[311px] max-w-[360px] h-[227px] rounded-[10px] box-border p-6 grid grid-rows-[1fr_auto] shadow-[0_0px_8px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.12),0_4px_20px_rgba(0,0,0,0.12),0_12px_28px_rgba(0,0,0,0.12)] mb-6 z-10"
+          style={{
+            background: 'linear-gradient(135deg, #2a2a2a 0%, #404040 50%, #1a1a1a 100%)',
+            backgroundSize: '360px 227px',
+            color: 'white',
+            fontFamily: 'AxLLCircular, Helvetica, Arial, sans-serif',
+            animation: 'cardAnimation 10s infinite',
+            transform: 'translateZ(0)'
+          }}
+        >
+          {/* ::before pseudo-element - Sombra interna */}
+          <div 
+            className="absolute inset-0 rounded-[10px] pointer-events-none z-[1]"
+            style={{
+              boxShadow: '0 -1px 0 0 rgba(255, 255, 255, 0.9), 0 1px 0 0 rgba(0, 0, 0, 0.2)'
+            }}
+          />
+          
+          {/* ::after pseudo-element - Gradiente holográfico animado */}
+          <div 
+            className="absolute inset-0 rounded-[10px] pointer-events-none"
+            style={{
+              background: 'linear-gradient(120deg, rgba(255, 255, 255, 0.02) 30%, rgba(255, 255, 255, 0.25) 40%, rgba(255, 255, 255, 0.08) 40%), linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.3))',
+              backgroundSize: '150% 150%',
+              animation: 'cardGradient 45s ease-in-out infinite',
+              transform: 'translateZ(0)'
+            }}
+          />
+          
+          {/* card-top */}
+          <div className="flex justify-between items-start z-[1] relative">
+            <span className="text-sm uppercase tracking-[1.5px] font-medium text-white/90">
+              Débito
+            </span>
+            <img 
+              src={asset('/banamex-logo.png')} 
+              alt="Banamex" 
+              className="h-[40px]"
+              style={{
+                filter: 'drop-shadow(0px 1px 0px rgba(255, 255, 255, 0.3)) drop-shadow(0 2px 16px rgba(0, 0, 0, 0.12)) drop-shadow(0px 0px 12px rgba(255, 255, 255, 1))'
+              }}
+            />
+          </div>
+          
+          {/* card-bottom */}
+          <div className="flex justify-between z-[1] relative">
+            <div className="grid gap-2">
+              <p className="m-0 text-[10px] uppercase font-medium tracking-[1.5px]">
+                CLABE
+              </p>
+              <p className="m-0 text-base tracking-[1.5px] font-bold max-w-[232px] whitespace-nowrap overflow-hidden text-ellipsis" style={{ textShadow: '0 0px 8px rgba(0, 0, 0, 0.12)' }}>
+                002180700905308698
+              </p>
+              <p className="m-0 text-[10px] uppercase font-medium tracking-[1.5px]">
+                Titular
+              </p>
+              <p className="m-0 text-sm tracking-[1.5px] font-bold leading-tight" style={{ textShadow: '0 0px 8px rgba(0, 0, 0, 0.12)' }}>
+                Amed Francisco Hernández Miranda
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Separador delicado */}
+        <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-white/20 to-transparent my-12" />
 
         {/* Mensaje introducción */}
         <motion.div {...fadeInUp} className="max-w-2xl text-center mb-16 z-10">
@@ -1143,57 +1379,145 @@ const InvitationContent: React.FC = () => {
           </p>
 
           {/* Cards de tiendas departamentales */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 max-w-3xl mx-auto">
-            <motion.div 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <motion.a
               {...fadeInUp}
-              className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-2xl hover:bg-white/15 transition-all duration-300"
+              href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51778525"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative bg-white/10 backdrop-blur-md border-2 border-white/20 rounded-3xl p-8 md:p-10 shadow-xl hover:shadow-2xl hover:border-white/30 transition-all duration-500 ease-out cursor-pointer block min-h-[320px] flex flex-col justify-between items-center overflow-hidden touch-manipulation active:scale-[0.98] hover:scale-[1.02]"
+              style={{ 
+                WebkitTapHighlightColor: 'transparent',
+                willChange: 'transform, box-shadow'
+              }}
             >
-              <h4 className="font-serif-display text-xs tracking-[0.3em] uppercase text-white/60 mb-4">
-                Liverpool
-              </h4>
-              <p className="font-mono text-3xl md:text-4xl tracking-wider text-white mb-2">
-                51778525
-              </p>
-              <div className="w-12 h-[1px] bg-white/20 mx-auto mt-4" />
-            </motion.div>
+              {/* Resplandor de fondo al hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              {/* Contenedor del logo */}
+              <div className="flex-1 flex items-center justify-center w-full py-8 relative z-10">
+                <div className="transform transition-transform duration-500 group-hover:scale-110 group-active:scale-105">
+                  <img 
+                    src={asset("/liverpool-logo.png")} 
+                    alt="Liverpool" 
+                    className="max-w-full max-h-36 object-contain filter drop-shadow-lg"
+                  />
+                </div>
+              </div>
+              
+              {/* Información del evento */}
+              <div className="w-full text-center pt-8 border-t-2 border-white/20 group-hover:border-white/40 transition-colors duration-500 relative z-10">
+                <p className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-white/70 mb-3 font-sans-clean">
+                  Número de evento
+                </p>
+                <p className="font-sans-clean text-3xl md:text-4xl tracking-wider text-white group-hover:text-white/95 transition-colors duration-300">
+                  51778525
+                </p>
+              </div>
+              
+              {/* Indicador de clic sutil */}
+              <div className="absolute top-4 right-4 w-2 h-2 bg-white/40 rounded-full group-hover:scale-150 transition-transform duration-300" />
+            </motion.a>
 
-            <motion.div 
+            <motion.a
               {...fadeInUp}
-              className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-2xl hover:bg-white/15 transition-all duration-300"
+              href="https://www.elpalaciodehierro.com/buscar?eventId=401633"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative bg-white/10 backdrop-blur-md border-2 border-white/20 rounded-3xl p-8 md:p-10 shadow-xl hover:shadow-2xl hover:border-white/30 transition-all duration-500 ease-out cursor-pointer block min-h-[320px] flex flex-col justify-between items-center overflow-hidden touch-manipulation active:scale-[0.98] hover:scale-[1.02]"
+              style={{ 
+                WebkitTapHighlightColor: 'transparent',
+                willChange: 'transform, box-shadow'
+              }}
             >
-              <h4 className="font-serif-display text-xs tracking-[0.3em] uppercase text-white/60 mb-4">
-                Palacio de Hierro
-              </h4>
-              <p className="font-mono text-3xl md:text-4xl tracking-wider text-white mb-2">
-                401633
-              </p>
-              <div className="w-12 h-[1px] bg-white/20 mx-auto mt-4" />
-            </motion.div>
-          </div>
-        </motion.div>
-
-        {/* Separador delicado */}
-        <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-white/20 to-transparent my-12" />
-        
-        {/* BBVA */}
-        <motion.div {...fadeInUp} className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-10 shadow-2xl max-w-md w-full z-10">
-          <h4 className="font-serif-display text-xs tracking-[0.3em] uppercase mb-8 text-white/60 text-center">
-            Transferencia Bancaria
-          </h4>
-          <div className="space-y-6 text-white/90">
-            <div className="text-center">
-              <p className="text-xs uppercase tracking-widest opacity-50 mb-3">Titular</p>
-              <p className="font-serif-elegant text-lg md:text-xl text-white">Citli Daniela Rios González</p>
-            </div>
-            <div className="w-16 h-[1px] bg-white/20 mx-auto" />
-            <div className="text-center">
-              <p className="text-xs uppercase tracking-widest opacity-50 mb-3">BBVA • Tarjeta Débito</p>
-              <p className="font-mono text-xl md:text-2xl tracking-wider text-white">4152 3144 8797 9604</p>
-            </div>
+              {/* Resplandor de fondo al hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              {/* Contenedor del logo */}
+              <div className="flex-1 flex items-center justify-center w-full py-8 relative z-10">
+                <div className="transform transition-transform duration-500 group-hover:scale-110 group-active:scale-105">
+                  <img 
+                    src={asset("/logo-palacio-de-hierro-removebg-preview.png")} 
+                    alt="Palacio de Hierro" 
+                    className="max-w-full max-h-44 object-contain filter drop-shadow-lg"
+                  />
+                </div>
+              </div>
+              
+              {/* Información del evento */}
+              <div className="w-full text-center pt-8 border-t-2 border-white/20 group-hover:border-white/40 transition-colors duration-500 relative z-10">
+                <p className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-white/70 mb-3 font-sans-clean">
+                  Número de evento
+                </p>
+                <p className="font-sans-clean text-3xl md:text-4xl tracking-wider text-white group-hover:text-white/95 transition-colors duration-300">
+                  401633
+                </p>
+              </div>
+              
+              {/* Indicador de clic sutil */}
+              <div className="absolute top-4 right-4 w-2 h-2 bg-white/40 rounded-full group-hover:scale-150 transition-transform duration-300" />
+            </motion.a>
           </div>
         </motion.div>
         
         <div className="w-[1px] h-16 bg-gradient-to-b from-white/20 via-transparent to-transparent mt-16" />
+      </section>
+
+      {/* RECUERDOS SECTION - AUTO SLIDER */}
+      <section className="py-24 px-6 bg-[#f5f0eb]">
+        <div className="max-w-4xl mx-auto">
+          <motion.h2 
+            {...fadeInUp}
+            className="font-script text-5xl md:text-6xl text-stone-800 mb-16 text-center"
+          >
+            Recuerdos
+          </motion.h2>
+          
+          <motion.div 
+            {...fadeInUp}
+            className="relative"
+          >
+            <div className="relative flex justify-center items-center min-h-[500px]">
+              {/* Contenedor de fotos con transición */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentPhotoIndex}
+                  initial={{ opacity: 0, x: 100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -100 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  className="relative w-full max-w-[340px] md:max-w-[400px]"
+                >
+                  {/* Foto grande */}
+                  <div className={`relative w-full h-[450px] md:h-[520px] rounded-[24px] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.2)] ${colorMode ? '' : 'grayscale'}`}>
+                    <img
+                      src={asset(`/foto${photos[currentPhotoIndex]}.jpeg`)}
+                      alt={`Recuerdo ${photos[currentPhotoIndex]}`}
+                      className="w-full h-full object-cover"
+                      decoding="async"
+                      loading="lazy"
+                      style={{ display: 'block', width: '100%', height: '100%', borderRadius: 'inherit', objectPosition: 'center center', objectFit: 'cover' }}
+                    />
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+            
+            {/* Indicadores de progreso */}
+            <div className="flex justify-center gap-2 mt-8">
+              {photos.map((_, idx) => (
+                <div 
+                  key={idx}
+                  className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
+                    currentPhotoIndex === idx 
+                      ? 'bg-[#5f6d4f] w-8' 
+                      : 'bg-stone-300'
+                  }`}
+                />
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </section>
 
       {/* RSVP SECTION */}
@@ -1221,7 +1545,7 @@ const InvitationContent: React.FC = () => {
       <footer className="pt-24 pb-12 px-6 flex flex-col items-center gap-6 bg-[#faf8f5]">
         <div className="w-full max-w-4xl bg-white p-6 shadow-lg border border-stone-200">
            <div className="w-full overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=1200" className="w-full h-auto object-cover grayscale" alt="Footer photo" />
+              <img src={asset('foto17.jpeg')} className={`w-full h-auto object-cover ${colorMode ? '' : 'grayscale'}`} alt="Footer photo" decoding="async" loading="lazy" style={{ display: 'block', width: '100%', height: '100%', borderRadius: 'inherit', objectPosition: 'center center', objectFit: 'cover' }} />
            </div>
         </div>
         <a 
