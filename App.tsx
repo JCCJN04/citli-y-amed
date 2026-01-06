@@ -83,7 +83,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <main className="min-h-screen relative bg-[#fcfaf2]">
+    <main className="min-h-screen relative bg-[#fcfaf2] overflow-x-hidden" style={{ touchAction: 'pan-y pinch-zoom', overscrollBehaviorX: 'none' }}>
       <AnimatePresence mode="wait">
         {!showContent ? (
           <motion.div
@@ -100,7 +100,8 @@ const App: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5 }}
-            className="w-full"
+            className="w-full overflow-x-hidden"
+            style={{ touchAction: 'pan-y pinch-zoom', overscrollBehaviorX: 'none' }}
           >
             <InvitationContent colorMode={isColorVersion} />
           </motion.div>
