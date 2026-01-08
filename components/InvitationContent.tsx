@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import DressCodeSection from './DressCodeSection';
+import GastronomyPage from './GastronomyPage';
+import RecuerdosPage from './RecuerdosPage';
+import EstilistasPage from './EstilistasPage';
 import { asset } from '@/utils/asset';
 
 interface InvitationContentProps {
@@ -168,15 +171,14 @@ const fadeInUp = {
   transition: { duration: 0.8, ease: [0.19, 1, 0.22, 1] as [number, number, number, number] }
 };
 
-const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false }) => {
+const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showGastronomyPage, setShowGastronomyPage] = useState(false);
+  const [showRecuerdosPage, setShowRecuerdosPage] = useState(false);
+  const [showEstilistasPage, setShowEstilistasPage] = useState(false);
   const [weatherData, setWeatherData] = useState<WeatherDay[]>([]);
   const [currentTemp, setCurrentTemp] = useState<number>(25);
   const [loading, setLoading] = useState(true);
-  
-  // State para el slider de fotos
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
-  const photos = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
 
   // ============================================
   // MÓDULO DE CLIMA - OpenWeatherMap API
@@ -291,15 +293,6 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
 
     fetchWeather();
   }, []);
-  
-  // Auto-cambiar fotos cada 2.5 segundos
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentPhotoIndex((prev) => (prev + 1) % photos.length);
-    }, 2500);
-    
-    return () => clearInterval(interval);
-  }, []);
 
   // Asegurar que Tally se cargue al montar el componente
   useEffect(() => {
@@ -320,19 +313,80 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
     { label: 'HOSPEDAJE', id: 'hospedaje' },
     { label: 'GASTRONOMÍA', id: 'gastronomia' },
     { label: 'MESA DE REGALOS', id: 'regalos' },
+    { label: 'RECUERDOS', id: 'recuerdos' },
     { label: 'RSVP', id: 'rsvp' },
+    { label: 'ESTILISTAS', id: 'estilistas' },
   ];
 
   const scrollToSection = (id: string) => {
     setIsMenuOpen(false);
+    
+    // Si es gastronomía, abrir la página separada
+    if (id === 'gastronomia') {
+      setShowGastronomyPage(true);
+      return;
+    }
+    
+    // Si es recuerdos, abrir la página separada
+    if (id === 'recuerdos') {
+      setShowRecuerdosPage(true);
+      return;
+    }
+    
+    // Si es estilistas, abrir la página separada
+    if (id === 'estilistas') {
+      setShowEstilistasPage(true);
+      return;
+    }
+    
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Diferentes offsets según la sección para compensar el header y espaciado
+      let headerOffset = 100;
+      
+      // Dress code y hospedaje necesitan más offset por el padding superior
+      if (id === 'dresscode') {
+        headerOffset = 0;
+      } else if (id === 'hospedaje') {
+        headerOffset = -400;
+      } else if (id === 'regalos') {
+        headerOffset = -80;
+      }
+      
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
   return (
-    <div className="w-full bg-[#faf8f5] min-h-screen font-serif-elegant selection:bg-[#e8e0d8]/40">
+    <>
+      {/* Página de Gastronomía */}
+      <AnimatePresence>
+        {showGastronomyPage && (
+          <GastronomyPage onClose={() => setShowGastronomyPage(false)} />
+        )}
+      </AnimatePresence>
+
+      {/* Página de Recuerdos */}
+      <AnimatePresence>
+        {showRecuerdosPage && (
+          <RecuerdosPage onClose={() => setShowRecuerdosPage(false)} />
+        )}
+      </AnimatePresence>
+
+      {/* Página de Estilistas */}
+      <AnimatePresence>
+        {showEstilistasPage && (
+          <EstilistasPage onClose={() => setShowEstilistasPage(false)} />
+        )}
+      </AnimatePresence>
+
+      <div className="w-full bg-[#faf8f5] min-h-screen font-serif-elegant selection:bg-[#e8e0d8]/40">
       
       {/* HEADER NAVIGATION */}
       <header className="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 z-[60] bg-[#faf8f5]/95 backdrop-blur-sm shadow-sm border-b border-[#e8e0d8]/30">
@@ -340,9 +394,9 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
           onClick={() => setIsMenuOpen(true)}
           className="text-[#5f6d4f] hover:opacity-60 transition-opacity p-2"
         >
-          <Menu className="w-6 h-6" />
+          <Menu className="w-8 h-8" />
         </button>
-        <img src={asset('Logo Citli y Amed .png')} alt="C&A" className="h-16 w-auto" decoding="async" loading="eager" />
+        <img src={asset('Logo Citli y Amed .png')} alt="C&A" className="h-20 w-auto" decoding="async" loading="eager" />
       </header>
 
       {/* MENU OVERLAY */}
@@ -370,7 +424,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
                 >
                   <X className="w-6 h-6" />
                 </button>
-                <img src={asset('Logo Citli y Amed .png')} alt="C&A" className="h-16 w-auto" decoding="async" loading="eager" />
+                <img src={asset('Logo Citli y Amed .png')} alt="C&A" className="h-20 w-auto" decoding="async" loading="eager" />
               </div>
               <nav className="flex flex-col gap-6 px-10">
                 {menuItems.map((item, index) => (
@@ -424,7 +478,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
           transition={{ duration: 1.2, delay: 0.35 }}
           className="bg-white p-4 pb-16 max-w-[340px] md:max-w-[420px] border border-black/10 shadow-[0_28px_55px_-38px_rgba(0,0,0,0.35)]"
         >
-          <div className={`aspect-[3/4] overflow-hidden ${colorMode ? '' : 'grayscale'} contrast-125`}>
+          <div className="aspect-[3/4] overflow-hidden contrast-125">
             <img 
               src={asset('foto1.jpeg')} 
               className="w-full h-full object-cover" 
@@ -440,12 +494,12 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
         <motion.div
           {...fadeInUp}
           className="w-full max-w-[420px] text-center mt-[-22px] pt-10 pb-8 px-6 bg-[#F3EFE8]/70 backdrop-blur-[4px] border border-black/5 shadow-[0_30px_70px_-50px_rgba(0,0,0,0.45)]"
-        >
+        > 
           <h1 className="text-4xl md:text-6xl font-serif-display tracking-[0.12em] text-[#2B2B2B] uppercase">
-            Citli & Amed
+            Citli y Amed
           </h1>
           <p className="font-script text-2xl md:text-3xl text-stone-800 italic tracking-wide mt-2">
-            Tepic, Nayarit
+            Tepic, Nayarit, México
           </p>
           <div className="text-lg md:text-xl font-serif-elegant tracking-[0.35em] text-[#9C968E] mt-4">
             28 · 03 · 2026
@@ -457,7 +511,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
       <section className="py-16 px-6 flex flex-col items-center text-center relative overflow-hidden border-y border-stone-200/50">
         {/* Capa de imagen de fondo floral grabada */}
         <div 
-          className={`absolute inset-0 z-0 opacity-40 ${colorMode ? '' : 'grayscale'} mix-blend-multiply pointer-events-none`}
+          className="absolute inset-0 z-0 opacity-40 mix-blend-multiply pointer-events-none"
           style={{ 
             backgroundImage: `url(${asset('wedding invitation paper texture.jpg')})`,
             backgroundSize: 'cover',
@@ -504,10 +558,10 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
           {/* Ceremonia Religiosa */}
           <motion.div {...fadeInUp} className="matchbox-card p-8 flex flex-col text-center">
             <div className="w-full h-56 mb-6 overflow-hidden flex items-center justify-center bg-white">
-              <img src={asset('iglesia.png')} className={`w-full h-full object-contain ${colorMode ? '' : 'grayscale'}`} alt="Iglesia" decoding="async" loading="lazy" />
+              <img src={asset('iglesia.png')} className="w-full h-full object-contain" alt="Iglesia" decoding="async" loading="lazy" />
             </div>
-            <h3 className="font-serif-display text-2xl tracking-wider uppercase mb-4 text-[#5f6d4f]">Ceremonia Religiosa</h3>
-            <p className="font-serif-elegant italic text-[#9a8c7e] mb-6 text-lg">13:00 H</p>
+            <h3 className="font-serif-display text-2xl tracking-wider mb-4 text-[#5f6d4f]">Ceremonia Religiosa</h3>
+            <p className="font-serif-elegant italic text-[#9a8c7e] mb-6 text-lg">12:30 H</p>
             <div className="space-y-3 mb-6 text-[#5f6d4f]">
               <p className="font-serif-elegant text-base leading-relaxed">
                 Templo Expiatorio De Nuestra Señora Del Carmen
@@ -531,9 +585,9 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
           {/* Ceremonia Civil y Recepción */}
           <motion.div {...fadeInUp} className="matchbox-card p-8 flex flex-col text-center">
             <div className="w-full h-56 mb-6 overflow-hidden flex items-center justify-center bg-white">
-              <img src={asset('ceremonia.png')} className={`w-full h-full object-contain ${colorMode ? '' : 'grayscale'}`} alt="Ceremonia" decoding="async" loading="lazy" />
+              <img src={asset('ceremonia.png')} className="w-full h-full object-contain" alt="Ceremonia" decoding="async" loading="lazy" />
             </div>
-            <h3 className="font-serif-display text-2xl tracking-wider uppercase mb-4 text-[#5f6d4f]">Ceremonia Civil y Recepción</h3>
+            <h3 className="font-serif-display text-2xl tracking-wider mb-4 text-[#5f6d4f]">Ceremonia Civil y Recepción</h3>
             <p className="font-serif-elegant italic text-[#9a8c7e] mb-6 text-lg">15:00 H</p>
             <div className="space-y-3 mb-6 text-[#5f6d4f]">
               <p className="font-serif-elegant text-base leading-relaxed">
@@ -555,6 +609,61 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
             </div>
           </motion.div>
         </div>
+      </section>
+
+      {/* Itinerario Image Section - Organic Editorial Shape */}
+      <section className="relative py-16 px-6 overflow-hidden bg-[#faf8f5]">
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
+          className="max-w-lg mx-auto relative"
+        >
+          {/* Organic Curved Shape Background - Editorial Style */}
+          <div 
+            className="relative bg-[#ebe6dc] p-8 shadow-[0_10px_40px_rgba(139,125,112,0.15)] overflow-hidden"
+            style={{
+              borderRadius: '45% 55% 58% 42% / 48% 42% 58% 52%',
+              transform: 'rotate(0deg)',
+            }}
+          >
+            {/* Content Container with Image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, delay: 0.3 }}
+              className="relative"
+            >
+              <img 
+                src={asset('itinerario.png')} 
+                alt="Itinerario" 
+                decoding="async" 
+                loading="lazy" 
+                className="w-full h-auto"
+              />
+            </motion.div>
+
+            {/* Subtle Text Decoration */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.8 }}
+              className="text-center mt-6"
+            >
+            </motion.div>
+          </div>
+
+          {/* Decorative Shadow Layer */}
+          <div 
+            className="absolute -bottom-3 -right-3 w-full h-full bg-[#d4c5b9]/30 -z-10"
+            style={{
+              borderRadius: '45% 55% 58% 42% / 48% 42% 58% 52%',
+            }}
+          />
+        </motion.div>
       </section>
 
       {/* DRESS CODE SECTION - Pinterest Board Embed */}
@@ -707,14 +816,14 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
           
           <motion.p 
             {...fadeInUp}
-            className="font-serif-display text-center text-[#8b7d70] mb-16 max-w-md mx-auto text-sm tracking-wider uppercase opacity-70"
+            className="font-serif-display text-center text-[#8b7d70] mb-16 max-w-md mx-auto text-sm tracking-wider opacity-70"
           >
             Opciones de  viaje
           </motion.p>
 
           {/* Vuelos Directos */}
           <motion.div {...fadeInUp} className="mb-16 text-center">
-            <h3 className="font-serif-display text-sm tracking-[0.25em] uppercase text-[#5f6d4f] mb-8 opacity-80">
+            <h3 className="font-serif-display text-sm tracking-[0.25em] text-[#5f6d4f] mb-8 opacity-80">
               En Vuelo Directo
             </h3>
             
@@ -746,7 +855,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
 
           {/* Alternativa */}
           <motion.div {...fadeInUp} className="mb-16 text-center">
-            <h3 className="font-serif-display text-sm tracking-[0.25em] uppercase text-[#5f6d4f] mb-8 opacity-80">
+            <h3 className="font-serif-display text-sm tracking-[0.25em] text-[#5f6d4f] mb-8 opacity-80">
               Alternativa
             </h3>
             
@@ -764,7 +873,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
           </motion.div>
 
           {/* Separador delicado */}
-          <div className="w-[1px] h-8 bg-[#d4c5b9]/20 mx-auto mb-12" />
+          {/*<div className="w-[1px] h-8 bg-[#d4c5b9]/20 mx-auto mb-12" */}
 
           {/* Recomendación */}
           <motion.div {...fadeInUp} className="text-center">
@@ -772,7 +881,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
               <div className="w-1 h-8 bg-gradient-to-b from-transparent via-[#c9a69a]/30 to-transparent mx-auto" />
             </div>
             
-            <h3 className="font-serif-display text-sm tracking-[0.25em] uppercase text-[#5f6d4f] mb-6 opacity-80">
+            <h3 className="font-serif-display text-sm tracking-[0.25em] text-[#5f6d4f] mb-6 opacity-80">
               Recomendación
             </h3>
             
@@ -781,10 +890,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
             </p>
             
             <div className="w-8 h-[1px] bg-[#d4c5b9]/20 mx-auto my-6" />
-            
-            <p className="font-serif-elegant text-sm text-[#8b7d70]/70 leading-loose max-w-xs mx-auto">
-              La ceremonia religiosa dará inicio a las 13:00 horas
-            </p>
+
           </motion.div>
 
           {/* Separador inferior */}
@@ -797,7 +903,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
         {/* Decorative Image at Top */}
         <motion.div {...fadeInUp} className="flex justify-start pl-4 mb-16">
           <div className="bg-white p-2 pb-10 shadow-lg rotate-1 border border-stone-100 max-w-[400px]">
-            <div className={`aspect-square overflow-hidden ${colorMode ? '' : 'grayscale'} opacity-80`}>
+            <div className="aspect-square overflow-hidden opacity-80">
               <img src={asset('foto4.jpeg')} alt="Detail" decoding="async" loading="lazy" style={{ display: 'block', width: '100%', height: '100%', borderRadius: 'inherit', objectPosition: 'center center', objectFit: 'cover' }} />
             </div>
           </div>
@@ -941,285 +1047,26 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
         </div>
       </section>
 
-      {/* GASTRONOMÍA */}
-      <section id="gastronomia" className="py-24 px-6 border-t border-stone-200">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="font-script text-5xl md:text-6xl text-stone-800 mb-12 text-center">Opciones de Restaurantes</h2>
-          
-          <p className="font-serif-elegant text-center text-[#8b7d70] mb-16 max-w-2xl mx-auto">
-            En Tepic encontrarás desde lugares con <strong>Sazón</strong> casero y delicioso, hasta restaurantes de <strong>Estilo</strong> más formal
+      {/* Decorative Image Section before Mesa de Regalos */}
+      <section className="py-16 px-6 max-w-3xl mx-auto">
+        <motion.div {...fadeInUp} className="flex justify-end pr-4 mb-8">
+          <div className="bg-white p-2 pb-10 shadow-lg -rotate-2 border border-stone-100 max-w-[400px]">
+            <div className="overflow-hidden opacity-80">
+              <img src={asset('foto3.jpeg')} alt="Detail" decoding="async" loading="lazy" style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 'inherit', objectPosition: 'center center', objectFit: 'cover' }} />
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div {...fadeInUp} className="text-center max-w-2xl mx-auto">
+          <p className="font-breathing text-3xl md:text-4xl text-[#8b7d70] italic leading-relaxed">
+            Somos tu y Yo
           </p>
-
-          {/* A) SAZÓN */}
-          <div className="mb-24">
-            <h3 className="font-serif-display text-3xl tracking-[0.2em] uppercase text-[#5f6d4f] mb-12">
-              SAZÓN
-            </h3>
-
-            {/* Desayunos */}
-            <div className="mb-16 relative">
-              <div className="absolute left-0 top-0 h-full flex items-center justify-center" style={{ width: '20px' }}>
-                <h4 className="font-serif-display text-base font-semibold tracking-[0.3em] uppercase text-[#5f6d4f] opacity-80 whitespace-nowrap" style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}>
-                  DESAYUNOS
-                </h4>
-              </div>
-              <div className="ml-16 space-y-3">
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Tía Martina</span>
-                  <a href="https://maps.app.goo.gl/rYiyd6ALXymyHvT77" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Los borrados</span>
-                  <a href="https://maps.app.goo.gl/VwDaJeXHyas8kRxh7" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Petit Brulé</span>
-                  <a href="https://maps.app.goo.gl/CGduoNhL8YxSbth58" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Claudia a la carta</span>
-                  <a href="https://maps.app.goo.gl/UWa7zXA2gwuk82BUA" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">El itacqte</span>
-                  <a href="https://maps.app.goo.gl/QayL4ZAXW5TqLndP6" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">El itacqte</span>
-                  <a href="https://maps.app.goo.gl/TQkMcRpg3JZMwU4v6" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Tacos de birria</span>
-                  <a href="https://maps.app.goo.gl/ytFZ7Q2H3NP7KmGQA" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Tacos de birria</span>
-                  <a href="https://maps.app.goo.gl/1uq7dJG1679ND5vG7" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Tacos de carnitas</span>
-                  <a href="https://maps.app.goo.gl/PnJYwHX5WNTnQPR46" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Lonchería Mercado</span>
-                  <a href="https://maps.app.goo.gl/Yq3SNnj3uDyfbZZw9" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Tortas el güero</span>
-                  <a href="https://maps.app.goo.gl/jb98PQoGXo8K17Xf8" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-              </div>
-            </div>
-
-            {/* Comida */}
-            <div className="mb-16 relative">
-              <div className="absolute left-0 top-0 h-full flex items-center justify-center" style={{ width: '20px' }}>
-                <h4 className="font-serif-display text-base font-semibold tracking-[0.3em] uppercase text-[#5f6d4f] opacity-80 whitespace-nowrap" style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}>
-                  COMIDA
-                </h4>
-              </div>
-              <div className="ml-16 space-y-3">
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">El mal portado</span>
-                  <a href="https://maps.app.goo.gl/6w641qTu8N7LnaZX7" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">El pilón</span>
-                  <a href="https://maps.app.goo.gl/b6AYmKgsAoQPJ4gx8" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Matsuri</span>
-                  <a href="https://maps.app.goo.gl/tfqD8iVTuaFXVV7E8" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Claudia a la carta</span>
-                  <a href="https://maps.app.goo.gl/UWa7zXA2gwuk82BUA" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Juan Carlos Nieves</span>
-                  <a href="https://maps.app.goo.gl/6d5EFk9hKgRcfcUq7" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-              </div>
-            </div>
-
-            {/* Cena */}
-            <div className="mb-16 relative">
-              <div className="absolute left-0 top-0 h-full flex items-center justify-center" style={{ width: '20px' }}>
-                <h4 className="font-serif-display text-base font-semibold tracking-[0.3em] uppercase text-[#5f6d4f] opacity-80 whitespace-nowrap" style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}>
-                  CENA
-                </h4>
-              </div>
-              <div className="ml-16 space-y-3">
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Jejenes & Gardenias</span>
-                  <a href="https://maps.app.goo.gl/M5YhTCCit6pwZSVM7" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Píos</span>
-                  <a href="https://maps.app.goo.gl/xRCu2rgMPR8jKz5C6" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">El buen taco</span>
-                  <a href="https://maps.app.goo.gl/6yHE2sugtqmTN3n18" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Pepe yus</span>
-                  <a href="https://maps.app.goo.gl/4PtEZQKQei8Kuafw9" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-
-          {/* B) ESTILO */}
-          <div className="mb-24">
-            <h3 className="font-serif-display text-3xl tracking-[0.2em] uppercase text-[#5f6d4f] mb-12">
-              ESTILO
-            </h3>
-
-            {/* Desayunos */}
-            <div className="mb-16 relative">
-              <div className="absolute left-0 top-0 h-full flex items-center justify-center" style={{ width: '20px' }}>
-                <h4 className="font-serif-display text-base font-semibold tracking-[0.3em] uppercase text-[#5f6d4f] opacity-80 whitespace-nowrap" style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}>
-                  DESAYUNOS
-                </h4>
-              </div>
-              <div className="ml-16 space-y-3">
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">La madalena</span>
-                  <a href="https://maps.app.goo.gl/aV1jw5CxT5rEUD2x6" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Comal</span>
-                  <a href="https://maps.app.goo.gl/1Dp2Mv6PSSktVc4q8" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Piloncillo</span>
-                  <a href="https://maps.app.goo.gl/GGbMJeVrcCV1wVEz5" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-              </div>
-            </div>
-
-            {/* Comida */}
-            <div className="mb-16 relative">
-              <div className="absolute left-0 top-0 h-full flex items-center justify-center" style={{ width: '20px' }}>
-                <h4 className="font-serif-display text-base font-semibold tracking-[0.3em] uppercase text-[#5f6d4f] opacity-80 whitespace-nowrap" style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}>
-                  COMIDA
-                </h4>
-              </div>
-              <div className="ml-16 space-y-3">
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">El marlin</span>
-                  <a href="https://maps.app.goo.gl/5XfMzRDCWyXAuJjR6" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Matsuri</span>
-                  <a href="https://maps.app.goo.gl/tfqD8iVTuaFXVV7E8" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">El estero</span>
-                  <a href="https://maps.app.goo.gl/GuqUajpHQaFT7g3m6" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">La ola</span>
-                  <a href="https://maps.app.goo.gl/MjEJdiv28x9Y2cq68" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Emilianos</span>
-                  <a href="https://maps.app.goo.gl/5e535RDkoxDfoRTV9" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Loma 42</span>
-                  <a href="https://maps.app.goo.gl/YDS7yTwdjcFCyKi1A" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-              </div>
-            </div>
-
-            {/* Cena */}
-            <div className="mb-16 relative">
-              <div className="absolute left-0 top-0 h-full flex items-center justify-center" style={{ width: '20px' }}>
-                <h4 className="font-serif-display text-base font-semibold tracking-[0.3em] uppercase text-[#5f6d4f] opacity-80 whitespace-nowrap" style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}>
-                  CENA
-                </h4>
-              </div>
-              <div className="ml-16 space-y-3">
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Emilianos</span>
-                  <a href="https://maps.app.goo.gl/5e535RDkoxDfoRTV9" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Tango y milonga</span>
-                  <a href="https://maps.app.goo.gl/YS332xmoCa2zpTBt9" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Loma 42</span>
-                  <a href="https://maps.app.goo.gl/YDS7yTwdjcFCyKi1A" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Dos de asada</span>
-                  <a href="https://maps.app.goo.gl/uWw3Wfy7pmDY8UPK7" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-
-          {/* BONUS */}
-          <div className="mb-24 pt-12 border-t-2 border-[#c9a69a]">
-            <h3 className="font-serif-display text-3xl tracking-[0.2em] uppercase text-[#c9a69a] mb-12">
-              BONUS
-            </h3>
-
-            <div className="mb-16 relative">
-              <div className="absolute left-0 top-0 h-full flex items-center justify-center" style={{ width: '20px' }}>
-                <h4 className="font-serif-display text-base font-semibold tracking-[0.3em] uppercase text-[#5f6d4f] opacity-80 whitespace-nowrap" style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}>
-                  BONUS
-                </h4>
-              </div>
-              <div className="ml-16 space-y-3">
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Pepe yus</span>
-                  <a href="https://maps.app.goo.gl/ub4VGCSEG7bbDuLNA" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Neto</span>
-                  <a href="https://maps.app.goo.gl/t3LNSfs5eqf5nNFW7" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-
-          {/* COFFEE SHOPS */}
-          <div className="mb-16 pt-12 border-t border-stone-200">
-            <div className="mb-16 relative">
-              <div className="absolute left-0 top-0 h-full flex items-center justify-center" style={{ width: '20px' }}>
-                <h4 className="font-serif-display text-base font-semibold tracking-[0.3em] uppercase text-[#5f6d4f] opacity-80 whitespace-nowrap" style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}>
-                  Cafeterías
-                </h4>
-              </div>
-              <div className="ml-16 space-y-3">
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Casa 164</span>
-                  <a href="https://maps.app.goo.gl/JnDkDNhtwWU95Bnz9" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-                <motion.div {...fadeInUp} className="flex items-center justify-between border-b border-stone-100 pb-2">
-                  <span className="font-serif-elegant italic text-lg text-[#8b7d70]">Brulé</span>
-                  <a href="https://maps.app.goo.gl/mxAqf1gqCrHQS2edA" target="_blank" rel="noopener noreferrer" className="bg-[#3a3a3a] text-white text-[9px] tracking-[0.2em] px-4 py-1.5 uppercase font-sans-clean hover:bg-[#5a5a5a] transition-colors">UBICACIÓN</a>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-
-          {/* Decorative Image */}
-          <div className="mt-16 flex justify-center">
-             <div className="bg-white p-2 shadow-md -rotate-2 border border-stone-50 max-w-[320px]">
-                <img src={asset('foto3.jpeg')} className={`${colorMode ? '' : 'grayscale'} contrast-125`} alt="Cafe" decoding="async" loading="lazy" style={{ display: 'block', width: '100%', height: '100%', borderRadius: 'inherit', objectPosition: 'center center', objectFit: 'cover' }} />
-             </div>
-          </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* MESA DE REGALOS */}
       <section id="regalos" className="py-32 px-6 bg-gradient-to-br from-[#3e3d3b] via-[#4a4847] to-[#3e3d3b] text-white relative flex flex-col items-center overflow-hidden">
-         <div className={`absolute inset-0 opacity-5 ${colorMode ? '' : 'grayscale'}`}>
+         <div className="absolute inset-0 opacity-5">
            <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover" alt="gift-bg" decoding="async" loading="lazy" />
         </div>
         
@@ -1463,63 +1310,6 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
         <div className="w-[1px] h-16 bg-gradient-to-b from-white/20 via-transparent to-transparent mt-16" />
       </section>
 
-      {/* RECUERDOS SECTION - AUTO SLIDER */}
-      <section className="py-24 px-6 bg-[#f5f0eb]">
-        <div className="max-w-4xl mx-auto">
-          <motion.h2 
-            {...fadeInUp}
-            className="font-script text-5xl md:text-6xl text-stone-800 mb-16 text-center"
-          >
-            Recuerdos
-          </motion.h2>
-          
-          <motion.div 
-            {...fadeInUp}
-            className="relative"
-          >
-            <div className="relative flex justify-center items-center min-h-[500px]">
-              {/* Contenedor de fotos con transición */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentPhotoIndex}
-                  initial={{ opacity: 0, x: 100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                  className="relative w-full max-w-[340px] md:max-w-[400px]"
-                >
-                  {/* Foto grande */}
-                  <div className={`relative w-full h-[450px] md:h-[520px] rounded-[24px] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.2)] ${colorMode ? '' : 'grayscale'}`}>
-                    <img
-                      src={asset(`/foto${photos[currentPhotoIndex]}.jpeg`)}
-                      alt={`Recuerdo ${photos[currentPhotoIndex]}`}
-                      className="w-full h-full object-cover"
-                      decoding="async"
-                      loading="lazy"
-                      style={{ display: 'block', width: '100%', height: '100%', borderRadius: 'inherit', objectPosition: 'center center', objectFit: 'cover' }}
-                    />
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-            
-            {/* Indicadores de progreso */}
-            <div className="flex justify-center gap-2 mt-8">
-              {photos.map((_, idx) => (
-                <div 
-                  key={idx}
-                  className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
-                    currentPhotoIndex === idx 
-                      ? 'bg-[#5f6d4f] w-8' 
-                      : 'bg-stone-300'
-                  }`}
-                />
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* RSVP SECTION */}
       <section id="rsvp" className="py-20 px-6 flex flex-col items-center bg-[#faf8f5]">
         <motion.div {...fadeInUp} className="w-full max-w-xl flex flex-col items-center">
@@ -1545,7 +1335,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
       <footer className="pt-24 pb-12 px-6 flex flex-col items-center gap-6 bg-[#faf8f5]">
         <div className="w-full max-w-4xl bg-white p-6 shadow-lg border border-stone-200">
            <div className="w-full overflow-hidden">
-              <img src={asset('foto17.jpeg')} className={`w-full h-auto object-cover ${colorMode ? '' : 'grayscale'}`} alt="Footer photo" decoding="async" loading="lazy" style={{ display: 'block', width: '100%', height: '100%', borderRadius: 'inherit', objectPosition: 'center center', objectFit: 'cover' }} />
+              <img src={asset('foto17.jpeg')} className="w-full h-auto object-cover" alt="Footer photo" decoding="async" loading="lazy" style={{ display: 'block', width: '100%', height: '100%', borderRadius: 'inherit', objectPosition: 'center center', objectFit: 'cover' }} />
            </div>
         </div>
         <a 
@@ -1558,6 +1348,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = false
         </a>
       </footer>
     </div>
+    </>
   );
 };
 

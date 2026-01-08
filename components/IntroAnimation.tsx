@@ -45,7 +45,7 @@ const IntroAnimation: React.FC<IntroProps> = ({ onOpen }) => {
         className="absolute top-[14%] md:top-[16%] text-center z-10"
       >
         <h2 className="font-script text-stone-600 tracking-[0.2em] text-4xl md:text-5xl">
-          Citli & Amed
+          Citli y Amed
         </h2>
       </motion.div>
 
@@ -102,7 +102,7 @@ const IntroAnimation: React.FC<IntroProps> = ({ onOpen }) => {
         >
           <div className="relative">
             {/* Texto manuscrito inclinado */}
-            <p className="font-serif-elegant text-[#7a8d6f]/70 text-lg md:text-xl leading-tight -rotate-[15deg] -translate-x-16 translate-y-4 max-w-[180px] text-center select-none italic">
+            <p className="font-breathing text-[#7a8d6f]/70 text-lg md:text-xl leading-tight -rotate-[15deg] -translate-x-16 translate-y-4 max-w-[180px] text-center select-none italic">
               Haz click en el sello para abrir la invitación
             </p>
 

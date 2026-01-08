@@ -12,7 +12,7 @@ const App: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   
   // Detectar si se quiere la versión a color desde la URL
-  const [isColorVersion, setIsColorVersion] = useState(false);
+  const [isColorVersion, setIsColorVersion] = useState(true);
   
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
