@@ -4,8 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import DressCodeSection from './DressCodeSection';
 import GastronomyPage from './GastronomyPage';
-import RecuerdosPage from './RecuerdosPage';
 import EstilistasPage from './EstilistasPage';
+import HotelesPage from './HotelesPage';
+import ViajarATepicPage from './ViajarATepicPage';
+import TurismoPage from './TurismoPage';
+import NuestraHistoriaPage from './NuestraHistoriaPage';
 import { asset } from '@/utils/asset';
 
 interface InvitationContentProps {
@@ -174,8 +177,11 @@ const fadeInUp = {
 const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showGastronomyPage, setShowGastronomyPage] = useState(false);
-  const [showRecuerdosPage, setShowRecuerdosPage] = useState(false);
   const [showEstilistasPage, setShowEstilistasPage] = useState(false);
+  const [showHotelesPage, setShowHotelesPage] = useState(false);
+  const [showViajarPage, setShowViajarPage] = useState(false);
+  const [showTurismoPage, setShowTurismoPage] = useState(false);
+  const [showNuestraHistoriaPage, setShowNuestraHistoriaPage] = useState(false);
   const [weatherData, setWeatherData] = useState<WeatherDay[]>([]);
   const [currentTemp, setCurrentTemp] = useState<number>(25);
   const [loading, setLoading] = useState(true);
@@ -309,33 +315,25 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
 
   const menuItems = [
     { label: 'ITINERARIO', id: 'itinerario' },
+    { label: 'NUESTRA HISTORIA', id: 'historia' },
     { label: 'DRESS CODE', id: 'dresscode' },
-    { label: 'HOSPEDAJE', id: 'hospedaje' },
-    { label: 'GASTRONOMÍA', id: 'gastronomia' },
+    { label: 'TURISMO', id: 'turismo' },
     { label: 'MESA DE REGALOS', id: 'regalos' },
-    { label: 'RECUERDOS', id: 'recuerdos' },
     { label: 'RSVP', id: 'rsvp' },
-    { label: 'ESTILISTAS', id: 'estilistas' },
   ];
 
   const scrollToSection = (id: string) => {
     setIsMenuOpen(false);
     
-    // Si es gastronomía, abrir la página separada
-    if (id === 'gastronomia') {
-      setShowGastronomyPage(true);
+    // Si es historia, abrir la página separada
+    if (id === 'historia') {
+      setShowNuestraHistoriaPage(true);
       return;
     }
     
-    // Si es recuerdos, abrir la página separada
-    if (id === 'recuerdos') {
-      setShowRecuerdosPage(true);
-      return;
-    }
-    
-    // Si es estilistas, abrir la página separada
-    if (id === 'estilistas') {
-      setShowEstilistasPage(true);
+    // Si es turismo, abrir la página separada
+    if (id === 'turismo') {
+      setShowTurismoPage(true);
       return;
     }
     
@@ -372,17 +370,38 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
         )}
       </AnimatePresence>
 
-      {/* Página de Recuerdos */}
-      <AnimatePresence>
-        {showRecuerdosPage && (
-          <RecuerdosPage onClose={() => setShowRecuerdosPage(false)} />
-        )}
-      </AnimatePresence>
-
       {/* Página de Estilistas */}
       <AnimatePresence>
         {showEstilistasPage && (
           <EstilistasPage onClose={() => setShowEstilistasPage(false)} />
+        )}
+      </AnimatePresence>
+
+      {/* Página de Hoteles */}
+      <AnimatePresence>
+        {showHotelesPage && (
+          <HotelesPage onClose={() => setShowHotelesPage(false)} />
+        )}
+      </AnimatePresence>
+
+      {/* Página de Viajar a Tepic */}
+      <AnimatePresence>
+        {showViajarPage && (
+          <ViajarATepicPage onClose={() => setShowViajarPage(false)} />
+        )}
+      </AnimatePresence>
+
+      {/* Página de Turismo */}
+      <AnimatePresence>
+        {showTurismoPage && (
+          <TurismoPage onClose={() => setShowTurismoPage(false)} />
+        )}
+      </AnimatePresence>
+
+      {/* Página de Nuestra Historia */}
+      <AnimatePresence>
+        {showNuestraHistoriaPage && (
+          <NuestraHistoriaPage onClose={() => setShowNuestraHistoriaPage(false)} />
         )}
       </AnimatePresence>
 
@@ -396,7 +415,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
         >
           <Menu className="w-8 h-8" />
         </button>
-        <img src={asset('Logo Citli y Amed .png')} alt="C&A" className="h-20 w-auto" decoding="async" loading="eager" />
+        <img src={asset('Logo Citli y Amed .png')} alt="C&A" className="h-24  w-auto" decoding="async" loading="eager" />
       </header>
 
       {/* MENU OVERLAY */}
@@ -424,7 +443,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
                 >
                   <X className="w-6 h-6" />
                 </button>
-                <img src={asset('Logo Citli y Amed .png')} alt="C&A" className="h-20 w-auto" decoding="async" loading="eager" />
+                <img src={asset('Logo Citli y Amed .png')} alt="C&A" className="h-24 w-auto" decoding="async" loading="eager" />
               </div>
               <nav className="flex flex-col gap-6 px-10">
                 {menuItems.map((item, index) => (
@@ -493,17 +512,25 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
         {/* Tarjeta inferior (overlap editorial) */}
         <motion.div
           {...fadeInUp}
-          className="w-full max-w-[420px] text-center mt-[-22px] pt-10 pb-8 px-6 bg-[#F3EFE8]/70 backdrop-blur-[4px] border border-black/5 shadow-[0_30px_70px_-50px_rgba(0,0,0,0.45)]"
+          className="w-full max-w-[340px] md:max-w-[500px] text-center mt-[-22px] pt-10 pb-8 px-6 bg-[#F3EFE8]/70 backdrop-blur-[4px] border border-black/5 shadow-[0_30px_70px_-50px_rgba(0,0,0,0.45)]"
         > 
-          <h1 className="text-4xl md:text-6xl font-serif-display tracking-[0.12em] text-[#2B2B2B] uppercase">
-            Citli y Amed
-          </h1>
-          <p className="font-script text-2xl md:text-3xl text-stone-800 italic tracking-wide mt-2">
-            Tepic, Nayarit, México
-          </p>
-          <div className="text-lg md:text-xl font-serif-elegant tracking-[0.35em] text-[#9C968E] mt-4">
-            28 · 03 · 2026
+          <div className="space-y-1 mb-6">
+            <p className="text-3xl md:text-4xl font-script text-[#2B2B2B] leading-tight text-left px-2 whitespace-nowrap">
+              Citli Daniela
+            </p>
+            <p className="text-2xl md:text-3xl font-script text-[#2B2B2B] text-center">
+              y
+            </p>
+            <p className="text-3xl md:text-4xl font-script text-[#2B2B2B] leading-tight text-right px-2 whitespace-nowrap">
+              Amed Francisco
+            </p>
           </div>
+          <div className="text-lg md:text-xl font-serif-elegant tracking-[0.3em] text-[#9C968E] mt-4">
+            28 de marzo de 2026
+          </div>
+          <p className="font-script text-xl md:text-2xl text-stone-800 italic tracking-wide mt-2">
+            Tepic Nayarit, México
+          </p>
         </motion.div>
       </section>
 
@@ -532,18 +559,18 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
             <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[1px] bg-stone-300/40 -translate-x-1/2" />
             
             <div className="flex flex-col items-center">
-              <p className="font-serif-elegant text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Luis Armando Rios Magallanes</p>
-              <p className="font-serif-elegant text-2xl md:text-3xl text-[#5f6d4f] my-2">&</p>
-              <p className="font-serif-elegant text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Karla Esther González Cedano</p>
+              <p className="font-alice text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Luis Armando Rios Magallanes</p>
+              <p className="font-alice text-2xl md:text-3xl text-[#5f6d4f] my-2">&</p>
+              <p className="font-alice text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Karla Esther González Cedano</p>
             </div>
             
             {/* Separador horizontal en móvil */}
             <div className="md:hidden w-16 h-[1px] bg-stone-300/40 mx-auto my-2" />
             
             <div className="flex flex-col items-center">
-              <p className="font-serif-elegant text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Víctor Hugo Hernández de los Santos</p>
-              <p className="font-serif-elegant text-2xl md:text-3xl text-[#5f6d4f] my-2">&</p>
-              <p className="font-serif-elegant text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Margarita Araceli Miranda de Santiago</p>
+              <p className="font-alice text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Víctor Hugo Hernández de los Santos</p>
+              <p className="font-alice text-2xl md:text-3xl text-[#5f6d4f] my-2">&</p>
+              <p className="font-alice text-lg md:text-xl text-[#5f6d4f] leading-relaxed">Margarita Araceli Miranda de Santiago</p>
             </div>
           </div>
         </motion.div>
@@ -561,7 +588,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
               <img src={asset('iglesia.png')} className="w-full h-full object-contain" alt="Iglesia" decoding="async" loading="lazy" />
             </div>
             <h3 className="font-serif-display text-2xl tracking-wider mb-4 text-[#5f6d4f]">Ceremonia Religiosa</h3>
-            <p className="font-serif-elegant italic text-[#9a8c7e] mb-6 text-lg">12:30 H</p>
+            <p className="font-serif-elegant italic text-[#9a8c7e] mb-6 text-lg">12:30 Horas</p>
             <div className="space-y-3 mb-6 text-[#5f6d4f]">
               <p className="font-serif-elegant text-base leading-relaxed">
                 Templo Expiatorio De Nuestra Señora Del Carmen
@@ -588,7 +615,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
               <img src={asset('ceremonia.png')} className="w-full h-full object-contain" alt="Ceremonia" decoding="async" loading="lazy" />
             </div>
             <h3 className="font-serif-display text-2xl tracking-wider mb-4 text-[#5f6d4f]">Ceremonia Civil y Recepción</h3>
-            <p className="font-serif-elegant italic text-[#9a8c7e] mb-6 text-lg">15:00 H</p>
+            <p className="font-serif-elegant italic text-[#9a8c7e] mb-6 text-lg">15:00 Horas</p>
             <div className="space-y-3 mb-6 text-[#5f6d4f]">
               <p className="font-serif-elegant text-base leading-relaxed">
                 Quinta "El Pichón"
@@ -801,177 +828,21 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
         <div className="w-[1px] h-4 bg-[#d4c5b9]/30 mx-auto mt-6" />
       </section>
 
-      {/* VIAJAR A TEPIC */}
-      <section className="py-16 px-6 bg-gradient-to-b from-[#faf8f5] to-white">
-        <div className="max-w-2xl mx-auto">
-          {/* Separador superior */}
-          <div className="w-[1px] h-8 bg-[#d4c5b9]/30 mx-auto mb-8" />
-          
-          <motion.h2 
-            {...fadeInUp}
-            className="font-script text-5xl md:text-6xl text-stone-800 mb-8 text-center leading-tight"
-          >
-            Viajar a Tepic
-          </motion.h2>
-          
-          <motion.p 
-            {...fadeInUp}
-            className="font-serif-display text-center text-[#8b7d70] mb-16 max-w-md mx-auto text-sm tracking-wider opacity-70"
-          >
-            Opciones de  viaje
-          </motion.p>
-
-          {/* Vuelos Directos */}
-          <motion.div {...fadeInUp} className="mb-16 text-center">
-            <h3 className="font-serif-display text-sm tracking-[0.25em] text-[#5f6d4f] mb-8 opacity-80">
-              En Vuelo Directo
-            </h3>
-            
-            <div className="space-y-10 max-w-md mx-auto">
-              <div className="space-y-3">
-                <p className="font-serif-display text-xl text-[#8b7d70]">
-                  Aeroméxico
-                </p>
-                <p className="font-serif-elegant text-sm text-[#8b7d70]/80 leading-loose max-w-xs mx-auto">
-                  Aeropuerto Internacional de la Ciudad de México
-                </p>
-              </div>
-              
-              <div className="w-16 h-[1px] bg-[#d4c5b9]/30 mx-auto" />
-              
-              <div className="space-y-3">
-                <p className="font-serif-display text-xl text-[#8b7d70]">
-                  Viva Aerobus
-                </p>
-                <p className="font-serif-elegant text-sm text-[#8b7d70]/80 leading-loose max-w-xs mx-auto">
-                  Aeropuerto Internacional Felipe Ángeles
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Separador delicado */}
-          <div className="w-[1px] h-8 bg-[#d4c5b9]/20 mx-auto mb-12" />
-
-          {/* Alternativa */}
-          <motion.div {...fadeInUp} className="mb-16 text-center">
-            <h3 className="font-serif-display text-sm tracking-[0.25em] text-[#5f6d4f] mb-8 opacity-80">
-              Alternativa
-            </h3>
-            
-            <div className="max-w-md mx-auto space-y-6">
-              <p className="font-serif-elegant text-base text-[#8b7d70] leading-loose">
-                Si prefieres volar a Guadalajara o Puerto Vallarta
-              </p>
-              
-              <div className="w-8 h-[1px] bg-[#d4c5b9]/20 mx-auto" />
-              
-              <p className="font-serif-elegant text-sm text-[#8b7d70]/80 leading-loose">
-                Desde la Central de Autobuses de Zapopan encontrarás salidas cada hora hacia Tepic
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Separador delicado */}
-          {/*<div className="w-[1px] h-8 bg-[#d4c5b9]/20 mx-auto mb-12" */}
-
-          {/* Recomendación */}
-          <motion.div {...fadeInUp} className="text-center">
-            <div className="inline-block mb-6">
-              <div className="w-1 h-8 bg-gradient-to-b from-transparent via-[#c9a69a]/30 to-transparent mx-auto" />
-            </div>
-            
-            <h3 className="font-serif-display text-sm tracking-[0.25em] text-[#5f6d4f] mb-6 opacity-80">
-              Recomendación
-            </h3>
-            
-            <p className="font-serif-elegant text-base text-[#8b7d70] leading-loose max-w-md mx-auto mb-6">
-              Te sugerimos rentar un auto y llegar un día antes
-            </p>
-            
-            <div className="w-8 h-[1px] bg-[#d4c5b9]/20 mx-auto my-6" />
-
-          </motion.div>
-
-          {/* Separador inferior */}
-          <div className="w-[1px] h-8 bg-[#d4c5b9]/30 mx-auto mt-12" />
-        </div>
-      </section>
-
-      {/* HOSPEDAJE */}
-      <section id="hospedaje" className="py-24 px-6 max-w-3xl mx-auto">
-        {/* Decorative Image at Top */}
-        <motion.div {...fadeInUp} className="flex justify-start pl-4 mb-16">
-          <div className="bg-white p-2 pb-10 shadow-lg rotate-1 border border-stone-100 max-w-[400px]">
-            <div className="aspect-square overflow-hidden opacity-80">
-              <img src={asset('foto4.jpeg')} alt="Detail" decoding="async" loading="lazy" style={{ display: 'block', width: '100%', height: '100%', borderRadius: 'inherit', objectPosition: 'center center', objectFit: 'cover' }} />
+      {/* Decorative Image Section before Mesa de Regalos */}
+      <section className="py-16 px-6 max-w-3xl mx-auto">
+        <motion.div {...fadeInUp} className="flex justify-center mb-8">
+          <div className="bg-white p-2 pb-10 shadow-lg -rotate-2 border border-stone-100 w-full max-w-[350px] md:max-w-[400px]">
+            <div className="overflow-hidden opacity-80">
+              <img src={asset('foto3.jpeg')} alt="Detail" decoding="async" loading="lazy" style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 'inherit', objectPosition: 'center center', objectFit: 'cover' }} />
             </div>
           </div>
         </motion.div>
 
-        <div className="pl-4">
-          <h3 className="font-script text-5xl md:text-6xl text-stone-800 mb-16">
-            Hoteles
-          </h3>
-          
-          <div className="space-y-16">
-            {/* Hotel Fray */}
-            <motion.div {...fadeInUp} className="flex flex-col items-start gap-1">
-              <span className="font-serif-elegant text-2xl md:text-3xl text-[#8b7d70] leading-none">
-                Hotel Fray
-              </span>
-              <div className="w-5 h-[1px] bg-stone-400 my-2 opacity-50" />
-              <a 
-                href="https://maps.app.goo.gl/sjVcGU1iG5Zbc8U26" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-[#5f6d4f] text-white text-[10px] tracking-[0.2em] px-6 py-2 uppercase font-sans-clean hover:bg-[#7a8269] transition-colors"
-              >
-                Reservar
-              </a>
-            </motion.div>
-
-            {/* Hotel La Loma */}
-            <motion.div {...fadeInUp} className="flex flex-col items-start gap-1">
-              <span className="font-serif-elegant text-2xl md:text-3xl text-[#8b7d70] leading-none">
-                Hotel La Loma
-              </span>
-              <div className="w-5 h-[1px] bg-stone-400 my-2 opacity-50" />
-              <a 
-                href="https://maps.app.goo.gl/b9geucPZcVwCcjrV8" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-[#5f6d4f] text-white text-[10px] tracking-[0.2em] px-6 py-2 uppercase font-sans-clean hover:bg-[#7a8269] transition-colors"
-              >
-                Reservar
-              </a>
-            </motion.div>
-
-            {/* Hotel Fray Select */}
-            <motion.div {...fadeInUp} className="flex flex-col items-start gap-1">
-              <span className="font-serif-elegant text-2xl md:text-3xl text-[#8b7d70] leading-none">
-                Hotel Fray Select
-              </span>
-              <div className="w-5 h-[1px] bg-stone-400 my-2 opacity-50" />
-              <a 
-                href="https://maps.app.goo.gl/DcRwf794Zfj6mzb67" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-[#5f6d4f] text-white text-[10px] tracking-[0.2em] px-6 py-2 uppercase font-sans-clean hover:bg-[#7a8269] transition-colors"
-              >
-                Reservar
-              </a>
-            </motion.div>
-
-            {/* Airbnb en Tepic */}
-            <motion.div {...fadeInUp} className="flex flex-col items-start gap-1">
-              <span className="font-serif-elegant text-2xl md:text-3xl text-[#8b7d70] leading-none">
-                Airbnb en Tepic
-              </span>
-              <div className="w-5 h-[1px] bg-stone-400 my-2 opacity-50" />
-            </motion.div>
-          </div>
-        </div>
+        <motion.div {...fadeInUp} className="text-center max-w-2xl mx-auto">
+          <p className="font-breathing text-3xl md:text-4xl text-[#8b7d70] italic leading-relaxed">
+            Somos tú y yo
+          </p>
+        </motion.div>
       </section>
 
       {/* RECOMENDACIONES PARA EL EVENTO */}
@@ -1047,23 +918,6 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
         </div>
       </section>
 
-      {/* Decorative Image Section before Mesa de Regalos */}
-      <section className="py-16 px-6 max-w-3xl mx-auto">
-        <motion.div {...fadeInUp} className="flex justify-end pr-4 mb-8">
-          <div className="bg-white p-2 pb-10 shadow-lg -rotate-2 border border-stone-100 max-w-[400px]">
-            <div className="overflow-hidden opacity-80">
-              <img src={asset('foto3.jpeg')} alt="Detail" decoding="async" loading="lazy" style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 'inherit', objectPosition: 'center center', objectFit: 'cover' }} />
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div {...fadeInUp} className="text-center max-w-2xl mx-auto">
-          <p className="font-breathing text-3xl md:text-4xl text-[#8b7d70] italic leading-relaxed">
-            Somos tu y Yo
-          </p>
-        </motion.div>
-      </section>
-
       {/* MESA DE REGALOS */}
       <section id="regalos" className="py-32 px-6 bg-gradient-to-br from-[#3e3d3b] via-[#4a4847] to-[#3e3d3b] text-white relative flex flex-col items-center overflow-hidden">
          <div className="absolute inset-0 opacity-5">
@@ -1075,6 +929,8 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
         <motion.h2 {...fadeInUp} className="font-script text-6xl md:text-7xl mb-4 text-white text-center">
           Sugerencia de regalo
         </motion.h2>
+
+        <br />
         
         <motion.p {...fadeInUp} className="font-serif-elegant text-base md:text-lg text-white/90 max-w-2xl text-center mb-12 leading-relaxed">
           Tu presencia es el regalo más importante para nosotros. Si desean hacernos un detalle, les agradecemos muchísimo nos apoyen a crear recuerdos en nuestra luna de miel

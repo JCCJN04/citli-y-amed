@@ -98,7 +98,7 @@ const IntroAnimation: React.FC<IntroProps> = ({ onOpen }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.8, duration: 1 }}
-          className="absolute bottom-[8%] left-1/2 -translate-x-[45%] flex flex-col items-center pointer-events-none z-30"
+          className="absolute bottom-[20%] md:bottom-[8%] left-1/2 -translate-x-[72%] flex flex-col items-center pointer-events-none z-30"
         >
           <div className="relative">
             {/* Texto manuscrito inclinado */}
