@@ -43,8 +43,17 @@ const TurismoPage: React.FC<TurismoPageProps> = ({ onClose }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed inset-0 z-[100] bg-[#faf8f5] overflow-y-auto"
+      className="fixed inset-0 z-[100] overflow-y-auto"
+      style={{
+        backgroundImage: `url(${asset('fondo1.jpg')})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed'
+      }}
     >
+      {/* Overlay para mejorar legibilidad */}
+      <div className="absolute inset-0 bg-[#faf8f5]/20 backdrop-blur-[0.5px] pointer-events-none" />
       {/* Header con botón cerrar */}
       <header className="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 z-[110] bg-[#faf8f5]/95 backdrop-blur-sm shadow-sm border-b border-[#e8e0d8]/30">
         <button 
@@ -61,7 +70,7 @@ const TurismoPage: React.FC<TurismoPageProps> = ({ onClose }) => {
         {/* ========================================== */}
         {/* SECCIÓN 1: VIAJAR A TEPIC */}
         {/* ========================================== */}
-        <section id="viajar-tepic" className="py-16 px-6 bg-gradient-to-b from-[#faf8f5] to-white border-b border-stone-200">
+        <section id="viajar-tepic" className="py-16 px-6 border-b border-stone-200">
           <div className="max-w-2xl mx-auto">
             <div className="w-[1px] h-8 bg-[#d4c5b9]/30 mx-auto mb-8" />
             

@@ -32,8 +32,17 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed inset-0 z-[100] bg-[#faf8f5] overflow-y-auto"
+      className="fixed inset-0 z-[100] overflow-y-auto"
+      style={{
+        backgroundImage: `url(${asset('fondo1.jpg')})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed'
+      }}
     >
+      {/* Overlay para mejorar legibilidad */}
+      <div className="absolute inset-0 bg-[#faf8f5]/20 backdrop-blur-[0.5px] pointer-events-none" />
       {/* Botón cerrar */}
       <button
         onClick={onClose}
@@ -48,7 +57,7 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
         {/* ========================================== */}
         {/* TÍTULO PRINCIPAL */}
         {/* ========================================== */}
-        <section className="py-16 px-6 bg-gradient-to-b from-[#faf8f5] to-white border-b border-stone-200">
+        <section className="py-16 px-6 border-b border-stone-200">
           <div className="max-w-4xl mx-auto text-center">
             <div className="w-[1px] h-8 bg-[#d4c5b9]/30 mx-auto mb-8" />
             
@@ -208,7 +217,7 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
         {/* ========================================== */}
         {/* SECCIÓN 2: MEMORIAS */}
         {/* ========================================== */}
-        <section id="memorias" className="py-24 px-6 bg-white border-b border-stone-200">
+        <section id="memorias" className="py-24 px-6 border-b border-stone-200">
           <div className="max-w-4xl mx-auto">
             <motion.h2 
               {...fadeInUp}

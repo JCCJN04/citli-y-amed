@@ -438,10 +438,21 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
         )}
       </AnimatePresence>
 
-      <div className="w-full bg-[#faf8f5] min-h-screen font-serif-elegant selection:bg-[#e8e0d8]/40">
+      <div 
+        className="w-full min-h-screen font-serif-elegant selection:bg-[#e8e0d8]/40 relative" 
+        style={{
+          backgroundImage: `url(${asset('fondo1.jpg')})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        {/* Overlay para mejorar legibilidad del contenido */}
+        <div className="absolute inset-0 bg-[#faf8f5]/40 backdrop-blur-[0.5px] pointer-events-none" style={{ zIndex: 0 }} />
       
       {/* HEADER NAVIGATION */}
-      <header className="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 z-[60] bg-[#faf8f5]/95 backdrop-blur-sm shadow-sm border-b border-[#e8e0d8]/30">
+      <header className="fixed top-0 left-0 right-0 w-full flex justify-between items-center px-6 py-4 z-[60] bg-[#faf8f5]/95 backdrop-blur-md shadow-sm border-b border-[#e8e0d8]/30">
         <button 
           onClick={() => setIsMenuOpen(true)}
           className="text-[#5f6d4f] hover:opacity-60 transition-opacity p-2"
@@ -652,7 +663,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
         />
         
         {/* Overlay para asegurar legibilidad */}
-        <div className="absolute inset-0 bg-[#f5f2ed]/80 z-0" />
+        <div className="absolute inset-0 bg-[#f5f2ed]/30 z-0" />
 
         <div className="w-[1px] h-16 bg-stone-400 mb-12 opacity-30 z-10 relative" />
         
@@ -744,7 +755,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
       </section>
 
       {/* Itinerario Image Section - Organic Editorial Shape */}
-      <section className="relative py-16 px-6 overflow-hidden bg-[#faf8f5]">
+      <section className="relative py-16 px-6 overflow-hidden">
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -951,7 +962,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
       </section>
 
       {/* RECOMENDACIONES PARA EL EVENTO */}
-      <section className="py-24 px-6 border-t border-stone-200 bg-[#f5f0eb]">
+      <section className="py-24 px-6 border-t border-stone-200">
         <div className="max-w-4xl mx-auto">
           <motion.h2 
             {...fadeInUp}
@@ -1272,7 +1283,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
       </section>
 
       {/* RSVP SECTION */}
-      <section id="rsvp" className="py-20 px-6 flex flex-col items-center bg-[#faf8f5]">
+      <section id="rsvp" className="py-20 px-6 flex flex-col items-center">
         <motion.div {...fadeInUp} className="w-full max-w-xl flex flex-col items-center">
           <div className="mb-8 text-center space-y-4">
             <h2 className="font-script text-5xl md:text-7xl text-stone-800 leading-tight drop-shadow-sm">Favor de Confirmar tu Asistencia</h2>
@@ -1293,7 +1304,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
       </section>
 
       {/* FOOTER */}
-      <footer className="pt-24 pb-12 px-6 flex flex-col items-center gap-6 bg-[#faf8f5]">
+      <footer className="pt-24 pb-12 px-6 flex flex-col items-center gap-6">
         <div className="w-full max-w-4xl bg-white p-6 shadow-lg border border-stone-200">
            <div className="w-full overflow-hidden">
               <img src={asset('foto17.jpeg')} className="w-full h-auto object-cover" alt="Footer photo" decoding="async" loading="lazy" style={{ display: 'block', width: '100%', height: '100%', borderRadius: 'inherit', objectPosition: 'center center', objectFit: 'cover' }} />
