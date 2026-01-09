@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Clock } from 'lucide-react';
 import DressCodeSection from './DressCodeSection';
 import GastronomyPage from './GastronomyPage';
 import EstilistasPage from './EstilistasPage';
@@ -185,6 +185,39 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
   const [weatherData, setWeatherData] = useState<WeatherDay[]>([]);
   const [currentTemp, setCurrentTemp] = useState<number>(25);
   const [loading, setLoading] = useState(true);
+
+  // ============================================
+  // CONTADOR REGRESIVO
+  // ============================================
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      // Fecha de la boda: 28 de marzo de 2026 a la 1 PM (13:00)
+      const weddingDate = new Date('2026-03-28T13:00:00');
+      const now = new Date();
+      const difference = weddingDate.getTime() - now.getTime();
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60)
+        });
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   // ============================================
   // MÓDULO DE CLIMA - OpenWeatherMap API
@@ -521,6 +554,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
             <p className="text-2xl md:text-3xl font-script text-[#2B2B2B] text-center">
               y
             </p>
+            <br />
             <p className="text-3xl md:text-4xl font-script text-[#2B2B2B] leading-tight text-right px-2 whitespace-nowrap">
               Amed Francisco
             </p>
@@ -530,6 +564,77 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
           </div>
           <p className="font-script text-xl md:text-2xl text-stone-800 italic tracking-wide mt-2">
             Tepic Nayarit, México
+          </p>
+        </motion.div>
+      </section>
+
+      {/* CONTADOR REGRESIVO */}
+      <section className="py-20 px-6">
+        <motion.div {...fadeInUp} className="max-w-4xl mx-auto text-center">
+          <h2 className="font-script text-3xl md:text-4xl text-[#8b7d70] mb-12">
+            Cuenta regresiva
+          </h2>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            {/* Días */}
+            <div className="flex flex-col items-center">
+              <div className="relative mb-4">
+                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white shadow-lg border border-stone-200 flex items-center justify-center">
+                  <span className="text-4xl md:text-5xl font-serif-display text-stone-800">
+                    {String(timeLeft.days).padStart(2, '0')}
+                  </span>
+                </div>
+              </div>
+              <span className="text-sm md:text-base font-serif-elegant text-stone-600 uppercase tracking-wider">
+                Días
+              </span>
+            </div>
+
+            {/* Horas */}
+            <div className="flex flex-col items-center">
+              <div className="relative mb-4">
+                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white shadow-lg border border-stone-200 flex items-center justify-center">
+                  <span className="text-4xl md:text-5xl font-serif-display text-stone-800">
+                    {String(timeLeft.hours).padStart(2, '0')}
+                  </span>
+                </div>
+              </div>
+              <span className="text-sm md:text-base font-serif-elegant text-stone-600 uppercase tracking-wider">
+                Horas
+              </span>
+            </div>
+
+            {/* Minutos */}
+            <div className="flex flex-col items-center">
+              <div className="relative mb-4">
+                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white shadow-lg border border-stone-200 flex items-center justify-center">
+                  <span className="text-4xl md:text-5xl font-serif-display text-stone-800">
+                    {String(timeLeft.minutes).padStart(2, '0')}
+                  </span>
+                </div>
+              </div>
+              <span className="text-sm md:text-base font-serif-elegant text-stone-600 uppercase tracking-wider">
+                Minutos
+              </span>
+            </div>
+
+            {/* Segundos */}
+            <div className="flex flex-col items-center">
+              <div className="relative mb-4">
+                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white shadow-lg border border-stone-200 flex items-center justify-center">
+                  <span className="text-4xl md:text-5xl font-serif-display text-stone-800">
+                    {String(timeLeft.seconds).padStart(2, '0')}
+                  </span>
+                </div>
+              </div>
+              <span className="text-sm md:text-base font-serif-elegant text-stone-600 uppercase tracking-wider">
+                Segundos
+              </span>
+            </div>
+          </div>
+
+          <p className="font-script text-xl md:text-2xl text-[#8b7d70] mt-12 italic">
+            Para celebrar juntos
           </p>
         </motion.div>
       </section>
