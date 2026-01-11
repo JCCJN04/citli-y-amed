@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import BackgroundImage from './BackgroundImage';
 import { asset } from '@/utils/asset';
 
 interface RecuerdosPageProps {
@@ -32,17 +33,9 @@ const RecuerdosPage: React.FC<RecuerdosPageProps> = ({ onClose }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed inset-0 z-[100] overflow-y-auto"
-      style={{
-        backgroundImage: `url(${asset('fondo1.jpg')})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed'
-      }}
+      className="fixed inset-0 z-[100] overflow-y-auto relative"
     >
-      {/* Overlay para mejorar legibilidad */}
-      <div className="absolute inset-0 bg-[#faf8f5]/20 backdrop-blur-[0.5px] pointer-events-none" />
+      <BackgroundImage />
       {/* Header con botón cerrar */}
       <header className="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 z-[110] bg-[#faf8f5]/95 backdrop-blur-sm shadow-sm border-b border-[#e8e0d8]/30">
         <button 

@@ -9,6 +9,7 @@ import HotelesPage from './HotelesPage';
 import ViajarATepicPage from './ViajarATepicPage';
 import TurismoPage from './TurismoPage';
 import NuestraHistoriaPage from './NuestraHistoriaPage';
+import BackgroundImage from './BackgroundImage';
 import { asset } from '@/utils/asset';
 
 interface InvitationContentProps {
@@ -168,10 +169,10 @@ interface WeatherDay {
 }
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 20 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true },
-  transition: { duration: 0.8, ease: [0.19, 1, 0.22, 1] as [number, number, number, number] }
+  transition: { duration: 0.6, ease: [0.19, 1, 0.22, 1] as [number, number, number, number] }
 };
 
 const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true }) => {
@@ -244,11 +245,11 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
           
           // Fechas específicas del evento: 26-30 de marzo de 2026
           const eventDates = [
-            { day: 'MIÉ', fullDate: '26' },
-            { day: 'JUE', fullDate: '27' },
-            { day: 'VIE', fullDate: '28' },
-            { day: 'SÁB', fullDate: '29' },
-            { day: 'DOM', fullDate: '30' }
+            { day: 'JUE', fullDate: '26' },
+            { day: 'VIE', fullDate: '27' },
+            { day: 'SÁB', fullDate: '28' },
+            { day: 'DOM', fullDate: '29' },
+            { day: 'LUN', fullDate: '30' }
           ];
           
           // Procesar datos de la API - Agrupar por día
@@ -314,11 +315,11 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
         // Fuente: Datos históricos de temperatura y condiciones típicas
         console.log('🔄 Usando datos históricos promedio de Tepic para marzo');
         const historicalData: WeatherDay[] = [
-          { day: 'MIÉ', date: '26', temp: 31, minTemp: 17, description: 'Cielo despejado', iconCode: '01d' },
-          { day: 'JUE', date: '27', temp: 32, minTemp: 18, description: 'Cielo despejado', iconCode: '01d' },
-          { day: 'VIE', date: '28', temp: 31, minTemp: 18, description: 'Algo de nubes', iconCode: '02d' },
-          { day: 'SÁB', date: '29', temp: 30, minTemp: 17, description: 'Cielo despejado', iconCode: '01d' },
-          { day: 'DOM', date: '30', temp: 32, minTemp: 18, description: 'Cielo despejado', iconCode: '01d' }
+          { day: 'JUE', date: '26', temp: 31, minTemp: 17, description: 'Cielo despejado', iconCode: '01d' },
+          { day: 'VIE', date: '27', temp: 32, minTemp: 18, description: 'Cielo despejado', iconCode: '01d' },
+          { day: 'SÁB', date: '28', temp: 31, minTemp: 18, description: 'Algo de nubes', iconCode: '02d' },
+          { day: 'DOM', date: '29', temp: 30, minTemp: 17, description: 'Cielo despejado', iconCode: '01d' },
+          { day: 'LUN', date: '30', temp: 32, minTemp: 18, description: 'Cielo despejado', iconCode: '01d' }
         ];
         
         setWeatherData(historicalData);
@@ -438,21 +439,12 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
         )}
       </AnimatePresence>
 
-      <div 
-        className="w-full min-h-screen font-serif-elegant selection:bg-[#e8e0d8]/40 relative" 
-        style={{
-          backgroundImage: `url(${asset('fondo1.jpg')})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed'
-        }}
-      >
-        {/* Overlay para mejorar legibilidad del contenido */}
-        <div className="absolute inset-0 bg-[#faf8f5]/40 backdrop-blur-[0.5px] pointer-events-none" style={{ zIndex: 0 }} />
-      
+      <div className="w-full min-h-screen font-serif-elegant selection:bg-[#e8e0d8]/40 relative bg-transparent">
+        {/* Fondo principal optimizado para toda la invitación */}
+        <BackgroundImage />
+        
       {/* HEADER NAVIGATION */}
-      <header className="fixed top-0 left-0 right-0 w-full flex justify-between items-center px-6 py-4 z-[60] bg-[#faf8f5]/95 backdrop-blur-md shadow-sm border-b border-[#e8e0d8]/30">
+      <header className="fixed top-0 left-0 right-0 w-full flex justify-between items-center px-6 py-4 z-[60] bg-[#faf8f5]/98 backdrop-blur-sm shadow-sm border-b border-[#e8e0d8]/40">
         <button 
           onClick={() => setIsMenuOpen(true)}
           className="text-[#5f6d4f] hover:opacity-60 transition-opacity p-2"
@@ -510,20 +502,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
 
       {/* HERO SECTION */}
       <section className="relative pt-24 pb-12 px-6 flex flex-col items-center overflow-hidden">
-        {/* Fondo editorial (textura) */}
-        <div className="absolute inset-0 -z-20">
-          <img
-            src={asset('fondo.png')}
-            className="w-full h-full object-cover opacity-95"
-            alt="bg"
-            decoding="async"
-            loading="eager"
-          />
-        </div>
-
-        {/* Overlays para look editorial + legibilidad */}
-        <div className="absolute inset-0 -z-10 bg-[#F3EFE8]/70" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white/60 via-transparent to-white/70" />
+        {/* BackgroundImage visible a través de toda la sección */}
 
         {/* Save the date (visible y discreto) */}
         <motion.p
@@ -652,16 +631,6 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
 
       {/* SECCIÓN PADRES - CON FONDO FLORAL PROPORCIONADO */}
       <section className="py-16 px-6 flex flex-col items-center text-center relative overflow-hidden border-y border-stone-200/50">
-        {/* Capa de imagen de fondo floral grabada */}
-        <div 
-          className="absolute inset-0 z-0 opacity-40 mix-blend-multiply pointer-events-none"
-          style={{ 
-            backgroundImage: `url(${asset('wedding invitation paper texture.jpg')})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        
         {/* Overlay para asegurar legibilidad */}
         <div className="absolute inset-0 bg-[#f5f2ed]/30 z-0" />
 
@@ -703,13 +672,13 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
             <div className="w-full h-56 mb-6 overflow-hidden flex items-center justify-center bg-white">
               <img src={asset('iglesia.png')} className="w-full h-full object-contain" alt="Iglesia" decoding="async" loading="lazy" />
             </div>
-            <h3 className="font-serif-display text-2xl tracking-wider mb-4 text-[#5f6d4f]">Ceremonia Religiosa</h3>
-            <p className="font-serif-elegant italic text-[#9a8c7e] mb-6 text-lg">12:30 Horas</p>
-            <div className="space-y-3 mb-6 text-[#5f6d4f]">
-              <p className="font-serif-elegant text-base leading-relaxed">
+            <h3 className="font-serif-display text-2xl tracking-wider mb-4 text-[#4a5a3f] font-semibold">Ceremonia Religiosa</h3>
+            <p className="font-serif-elegant italic text-[#6a5c4e] mb-6 text-lg font-medium">12:30 Horas</p>
+            <div className="space-y-3 mb-6 text-[#4a5a3f]">
+              <p className="font-serif-elegant text-base leading-relaxed font-medium">
                 Templo Expiatorio De Nuestra Señora Del Carmen
               </p>
-              <p className="text-sm text-[#8b7d70] leading-relaxed">
+              <p className="text-sm text-[#6a5c4e] leading-relaxed">
                 Avenida México Norte 117, Centro, 63000 Tepic, Nayarit
               </p>
             </div>
@@ -730,13 +699,13 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
             <div className="w-full h-56 mb-6 overflow-hidden flex items-center justify-center bg-white">
               <img src={asset('ceremonia.png')} className="w-full h-full object-contain" alt="Ceremonia" decoding="async" loading="lazy" />
             </div>
-            <h3 className="font-serif-display text-2xl tracking-wider mb-4 text-[#5f6d4f]">Ceremonia Civil y Recepción</h3>
-            <p className="font-serif-elegant italic text-[#9a8c7e] mb-6 text-lg">15:00 Horas</p>
-            <div className="space-y-3 mb-6 text-[#5f6d4f]">
-              <p className="font-serif-elegant text-base leading-relaxed">
+            <h3 className="font-serif-display text-2xl tracking-wider mb-4 text-[#4a5a3f] font-semibold">Ceremonia Civil y Recepción</h3>
+            <p className="font-serif-elegant italic text-[#6a5c4e] mb-6 text-lg font-medium">15:00 Horas</p>
+            <div className="space-y-3 mb-6 text-[#4a5a3f]">
+              <p className="font-serif-elegant text-base leading-relaxed font-medium">
                 Quinta "El Pichón"
               </p>
-              <p className="text-sm text-[#8b7d70] leading-relaxed">
+              <p className="text-sm text-[#6a5c4e] leading-relaxed">
                 Calle principal El Pichón., Calz. de Guadalupe, 63505 Tepic, Nayarit
               </p>
             </div>
@@ -765,7 +734,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
         >
           {/* Organic Curved Shape Background - Editorial Style */}
           <div 
-            className="relative bg-[#ebe6dc] p-8 shadow-[0_10px_40px_rgba(139,125,112,0.15)] overflow-hidden"
+            className="relative bg-[#ebe6dc] p-8 shadow-[0_15px_50px_rgba(0,0,0,0.15)] overflow-hidden"
             style={{
               borderRadius: '45% 55% 58% 42% / 48% 42% 58% 52%',
               transform: 'rotate(0deg)',
@@ -815,7 +784,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
       </div>
 
       {/* CLIMA NAYARIT - Diseño Editorial Horizontal */}
-      <section className="relative py-8 px-6 overflow-hidden bg-gradient-to-br from-[#f5f2ed] via-[#faf8f5] to-[#f0ede8]">
+      <section className="relative py-8 px-6 overflow-hidden">
         {/* Separador superior */}
         <div className="w-[1px] h-4 bg-[#d4c5b9]/30 mx-auto mb-6" />
         
@@ -978,20 +947,6 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#5f6d4f] mt-2"></div>
               <p className="font-serif-elegant text-base md:text-lg text-stone-700">
-                Recuerda que es una <strong>boda maratónica</strong>
-              </p>
-            </div>
-            
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#5f6d4f] mt-2"></div>
-              <p className="font-serif-elegant text-base md:text-lg text-stone-700">
-                Desayuna muy bien
-              </p>
-            </div>
-            
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#5f6d4f] mt-2"></div>
-              <p className="font-serif-elegant text-base md:text-lg text-stone-700">
                 Durante el día hará <strong>calor</strong>
               </p>
             </div>
@@ -1006,14 +961,14 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#5f6d4f] mt-2"></div>
               <p className="font-serif-elegant text-base md:text-lg text-stone-700">
-                Trae <strong>zapatos cómodos</strong> (es jardín y se pondrá húmedo)
+                Trae <strong>zapatos cómodos</strong> (jardín)
               </p>
             </div>
             
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#5f6d4f] mt-2"></div>
               <p className="font-serif-elegant text-base md:text-lg text-stone-700">
-                Trae <strong>abrigo</strong> y prepárate para la neblina (Tepic Londinense)
+                Trae <strong>abrigo</strong> y prepárate para la neblina
               </p>
             </div>
             

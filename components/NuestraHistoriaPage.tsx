@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import BackgroundImage from './BackgroundImage';
 import { asset } from '../utils/asset';
 
 interface NuestraHistoriaPageProps {
@@ -32,21 +33,14 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed inset-0 z-[100] overflow-y-auto"
-      style={{
-        backgroundImage: `url(${asset('fondo1.jpg')})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed'
-      }}
+      className="fixed inset-0 z-[9999] overflow-y-auto overflow-x-hidden"
+      style={{ overscrollBehavior: 'contain' }}
     >
-      {/* Overlay para mejorar legibilidad */}
-      <div className="absolute inset-0 bg-[#faf8f5]/20 backdrop-blur-[0.5px] pointer-events-none" />
+      <BackgroundImage />
       {/* Botón cerrar */}
       <button
         onClick={onClose}
-        className="fixed top-6 right-6 z-[110] w-10 h-10 flex items-center justify-center bg-white/80 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-colors"
+        className="fixed top-6 right-6 z-[10000] w-10 h-10 flex items-center justify-center bg-white/80 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-colors"
         aria-label="Cerrar"
       >
         <X className="w-5 h-5 text-stone-600" />
@@ -57,7 +51,7 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
         {/* ========================================== */}
         {/* TÍTULO PRINCIPAL */}
         {/* ========================================== */}
-        <section className="py-16 px-6 border-b border-stone-200">
+        <section className="py-16 px-6">
           <div className="max-w-4xl mx-auto text-center">
             <div className="w-[1px] h-8 bg-[#d4c5b9]/30 mx-auto mb-8" />
             
@@ -82,49 +76,47 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
         {/* ========================================== */}
         {/* SECCIÓN 1: SOBRE NOSOTROS */}
         {/* ========================================== */}
-        <section id="sobre-nosotros" className="py-24 px-6 border-b border-stone-200">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="font-serif-display text-4xl tracking-[0.15em] text-[#5f6d4f] mb-16 text-center">
+        <section id="sobre-nosotros" className="py-16 md:py-24 px-4 sm:px-6">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="font-serif-display text-3xl sm:text-4xl tracking-[0.15em] text-[#5f6d4f] mb-12 md:mb-16 text-center">
               Sobre Nosotros
             </h2>
 
             {/* Según Citli */}
-            <motion.div {...fadeInUp} className="mb-20">
-              <div className="mb-6">
-                <h3 className="font-script text-3xl text-[#c9a69a] mb-2">Según Citli</h3>
-                <div className="w-16 h-[1px] bg-[#c9a69a]/30" />
+            <motion.div {...fadeInUp} className="mb-16 md:mb-20">
+              <div className="mb-4 md:mb-6">
+                <h3 className="font-script text-2xl sm:text-3xl text-[#5f6d4f] mb-2">Según Citli</h3>
               </div>
               
-              <p className="font-serif-elegant text-lg text-[#8b7d70] leading-relaxed">
+              <p className="font-serif-elegant text-base sm:text-lg text-[#8b7d70] leading-relaxed">
                 Nos conocimos trabajando en un despacho trasnacional; fuimos amiguitos durante años y crecimos laboralmente juntos. Años más tarde nos tocó trabajar (como pares) en el mismo equipo de trabajo y nos volvimos más cercanos, hasta que un día alguien dijo "me encantas" y no hubo vuelta atrás: salimos algún tiempo, sin pensar lo serio y lo lejos que podríamos llegar.
               </p>
             </motion.div>
 
             {/* Según Amed */}
-            <motion.div {...fadeInUp} className="mb-12">
-              <div className="mb-6">
-                <h3 className="font-script text-3xl text-[#5f6d4f] mb-2">Según Amed</h3>
-                <div className="w-16 h-[1px] bg-[#5f6d4f]/30" />
+            <motion.div {...fadeInUp} className="mb-12 md:mb-16">
+              <div className="mb-4 md:mb-6">
+                <h3 className="font-script text-2xl sm:text-3xl text-[#5f6d4f] mb-2">Según Amed</h3>
               </div>
               
-              <p className="font-serif-elegant text-lg text-[#8b7d70] leading-relaxed">
+              <p className="font-serif-elegant text-base sm:text-lg text-[#8b7d70] leading-relaxed">
                 En efecto, nos conocimos en el trabajo, fuimos muy amigos siempre, cuando nos tocó trabajar de la mano, formamos un buen equipo mismo que ha perdurado a la fecha, a pesar de ser tan diferentes, siempre llegamos a una excelente solución.
               </p>
             </motion.div>
 
             {/* Galería de fotos de su historia */}
-            <motion.div {...fadeInUp} className="mt-20">
-              <div className="w-[1px] h-8 bg-[#d4c5b9]/20 mx-auto mb-12" />
+            <motion.div {...fadeInUp} className="mt-16 md:mt-20">
+              <div className="w-[1px] h-6 md:h-8 bg-[#d4c5b9]/20 mx-auto mb-8 md:mb-12" />
               
-              {/* Grid de fotos con diseño asimétrico y elegante */}
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-                {/* Foto 1 - Grande */}
+              {/* Grid de fotos con diseño uniforme y responsivo */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6 max-w-6xl mx-auto">
+                {/* Foto 1 */}
                 <motion.div 
                   {...fadeInUp}
-                  className="col-span-2 md:col-span-2 row-span-2 relative group"
+                  className="relative group w-full"
                 >
-                  <div className="bg-white p-3 shadow-xl rotate-[-1deg] hover:rotate-0 transition-all duration-500 hover:scale-[1.02] border border-stone-100">
-                    <div className="aspect-[4/3] overflow-hidden">
+                  <div className="bg-white p-2 sm:p-3 shadow-lg hover:shadow-xl rotate-[-1deg] hover:rotate-0 transition-all duration-500 hover:scale-[1.02] border border-stone-100">
+                    <div className="aspect-[4/5] overflow-hidden">
                       <img 
                         src={asset('foto24.jpeg')} 
                         alt="Nuestra historia 1" 
@@ -136,13 +128,13 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
                   </div>
                 </motion.div>
 
-                {/* Foto 2 - Pequeña */}
+                {/* Foto 2 */}
                 <motion.div 
                   {...fadeInUp}
-                  className="relative group"
+                  className="relative group w-full"
                 >
-                  <div className="bg-white p-3 shadow-xl rotate-[2deg] hover:rotate-0 transition-all duration-500 hover:scale-105 border border-stone-100">
-                    <div className="aspect-square overflow-hidden">
+                  <div className="bg-white p-2 sm:p-3 shadow-lg hover:shadow-xl rotate-[1deg] hover:rotate-0 transition-all duration-500 hover:scale-[1.02] border border-stone-100">
+                    <div className="aspect-[4/5] overflow-hidden">
                       <img 
                         src={asset('foto25.jpeg')} 
                         alt="Nuestra historia 2" 
@@ -154,15 +146,15 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
                   </div>
                 </motion.div>
 
-                {/* Foto 3 - Pequeña */}
+                {/* Foto 3 */}
                 <motion.div 
                   {...fadeInUp}
-                  className="relative group"
+                  className="relative group w-full"
                 >
-                  <div className="bg-white p-3 shadow-xl rotate-[-2deg] hover:rotate-0 transition-all duration-500 hover:scale-105 border border-stone-100">
-                    <div className="aspect-square overflow-hidden">
+                  <div className="bg-white p-2 sm:p-3 shadow-lg hover:shadow-xl rotate-[0.5deg] hover:rotate-0 transition-all duration-500 hover:scale-[1.02] border border-stone-100">
+                    <div className="aspect-[4/5] overflow-hidden">
                       <img 
-                        src={asset('foto26.jpeg')} 
+                        src={asset('foto27.jpeg')} 
                         alt="Nuestra historia 3" 
                         decoding="async" 
                         loading="lazy" 
@@ -172,34 +164,16 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
                   </div>
                 </motion.div>
 
-                {/* Foto 4 - Mediana */}
+                {/* Foto 4 */}
                 <motion.div 
                   {...fadeInUp}
-                  className="col-span-1 relative group"
+                  className="relative group w-full"
                 >
-                  <div className="bg-white p-3 shadow-xl rotate-[1deg] hover:rotate-0 transition-all duration-500 hover:scale-105 border border-stone-100">
-                    <div className="aspect-[3/4] overflow-hidden">
-                      <img 
-                        src={asset('foto27.jpeg')} 
-                        alt="Nuestra historia 4" 
-                        decoding="async" 
-                        loading="lazy" 
-                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
-                      />
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Foto 5 - Mediana */}
-                <motion.div 
-                  {...fadeInUp}
-                  className="col-span-1 relative group"
-                >
-                  <div className="bg-white p-3 shadow-xl rotate-[-1deg] hover:rotate-0 transition-all duration-500 hover:scale-105 border border-stone-100">
-                    <div className="aspect-[3/4] overflow-hidden">
+                  <div className="bg-white p-2 sm:p-3 shadow-lg hover:shadow-xl rotate-[-0.5deg] hover:rotate-0 transition-all duration-500 hover:scale-[1.02] border border-stone-100">
+                    <div className="aspect-[4/5] overflow-hidden">
                       <img 
                         src={asset('foto28.jpeg')} 
-                        alt="Nuestra historia 5" 
+                        alt="Nuestra historia 4" 
                         decoding="async" 
                         loading="lazy" 
                         className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
@@ -209,7 +183,7 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
                 </motion.div>
               </div>
 
-              <div className="w-[1px] h-8 bg-[#d4c5b9]/20 mx-auto mt-12" />
+              <div className="w-[1px] h-6 md:h-8 bg-[#d4c5b9]/20 mx-auto mt-8 md:mt-12" />
             </motion.div>
           </div>
         </section>
@@ -217,7 +191,7 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
         {/* ========================================== */}
         {/* SECCIÓN 2: MEMORIAS */}
         {/* ========================================== */}
-        <section id="memorias" className="py-24 px-6 border-b border-stone-200">
+        <section id="memorias" className="py-24 px-6">
           <div className="max-w-4xl mx-auto">
             <motion.h2 
               {...fadeInUp}
@@ -285,8 +259,7 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
             {/* Según Citli */}
             <motion.div {...fadeInUp} className="mb-20">
               <div className="mb-6">
-                <h3 className="font-script text-3xl text-[#c9a69a] mb-2">Según Citli</h3>
-                <div className="w-16 h-[1px] bg-[#c9a69a]/30" />
+                <h3 className="font-script text-3xl text-[#5f6d4f] mb-2">Según Citli</h3>
               </div>
               
               <div className="space-y-4">
@@ -308,7 +281,6 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
             <motion.div {...fadeInUp} className="mb-12">
               <div className="mb-6">
                 <h3 className="font-script text-3xl text-[#5f6d4f] mb-2">Según Amed</h3>
-                <div className="w-16 h-[1px] bg-[#5f6d4f]/30" />
               </div>
               
               <div className="space-y-4">
@@ -333,10 +305,9 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
             {/* Galería de fotos de la propuesta */}
             <motion.div {...fadeInUp} className="mt-20">
               <div className="w-[1px] h-12 bg-[#d4c5b9]/30 mx-auto mb-12" />
-              
-              <h3 className="font-script text-4xl text-center text-[#c9a69a] mb-16">
-                El Momento Perfecto
-              </h3>
+              <h2 className="font-serif-display text-4xl tracking-[0.15em] text-[#5f6d4f] mb-16 text-center">
+              El Momento Perfecto
+              </h2>
 
               {/* Grid de fotos con efecto polaroid elegante */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-3xl mx-auto">
@@ -390,7 +361,7 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
                   <div className="bg-white p-4 pb-16 shadow-2xl rotate-[1deg] hover:rotate-0 transition-all duration-500 hover:scale-105 border border-stone-100">
                     <div className="aspect-[4/5] overflow-hidden">
                       <img 
-                        src={asset('foto22.jpeg')} 
+                        src={asset('anillo.jpeg')} 
                         alt="Propuesta en París 3" 
                         decoding="async" 
                         loading="lazy" 
@@ -419,7 +390,7 @@ const NuestraHistoriaPage: React.FC<NuestraHistoriaPageProps> = ({ onClose }) =>
                       />
                     </div>
                     <p className="font-script text-center text-stone-600 mt-4 text-lg">
-                      Felicidad
+                      On s’aimera toujours
                     </p>
                   </div>
                 </motion.div>

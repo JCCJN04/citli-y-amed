@@ -47,7 +47,7 @@
       }
 
       body {
-        background-color: #faf8f5;
+        background-color: transparent;
         margin: 0;
         overflow-x: hidden;
         color: #3e3d3b;
@@ -78,8 +78,9 @@
         height: 100%;
         pointer-events: none;
         z-index: 9999;
-        opacity: 0.05;
+        opacity: 0.015;
         background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+        mix-blend-mode: multiply;
       }
 
       .linen-texture {
@@ -102,8 +103,8 @@
 
       .matchbox-card {
         background: white;
-        box-shadow: 0 4px 15px rgba(95,109,79,0.08);
-        border: 1px solid rgba(212,197,185,0.3);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08);
+        border: 1px solid rgba(95,109,79,0.2);
       }
 
       @keyframes cardGradient {
@@ -134,9 +135,12 @@
         display: block;
         object-fit: cover;
         object-position: center center;
-        image-rendering: auto;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        backface-visibility: hidden;
+        transform: translateZ(0);
       }
 
       .grayscale {

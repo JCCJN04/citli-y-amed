@@ -4,9 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause } from 'lucide-react';
 import IntroAnimation from './components/IntroAnimation';
 import InvitationContent from './components/InvitationContent';
+import PasswordProtection from './components/PasswordProtection';
 import { asset } from '@/utils/asset';
 
 const App: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -17,7 +19,17 @@ const App: React.FC = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setIsColorVersion(params.get('color') === 'true');
+    
+    // Verificar si ya está autenticado en esta sesión
+    const authenticated = sessionStorage.getItem('wedding_authenticated');
+    if (authenticated === 'true') {
+      setIsAuthenticated(true);
+    }
   }, []);
+
+  const handleAuthenticated = () => {
+    setIsAuthenticated(true);
+  };
 
   // Función para intentar reproducir el audio
   const attemptPlay = async () => {
@@ -83,9 +95,18 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <main className="min-h-screen relative bg-[#fcfaf2] overflow-x-hidden" style={{ touchAction: 'pan-y pinch-zoom', overscrollBehaviorX: 'none' }}>
+    <main className="min-h-screen relative bg-transparent overflow-x-hidden" style={{ touchAction: 'pan-y pinch-zoom', overscrollBehaviorX: 'none' }}>
       <AnimatePresence mode="wait">
-        {!showContent ? (
+        {!isAuthenticated ? (
+          <motion.div
+            key="password"
+            exit={{ opacity: 0, scale: 1.05, filter: 'blur(20px)' }}
+            transition={{ duration: 1, ease: [0.4, 0, 0.2, 1] }}
+            className="fixed inset-0 z-50"
+          >
+            <PasswordProtection onAuthenticated={handleAuthenticated} />
+          </motion.div>
+        ) : !showContent ? (
           <motion.div
             key="intro"
             exit={{ opacity: 0, scale: 1.05, filter: 'blur(20px)' }}

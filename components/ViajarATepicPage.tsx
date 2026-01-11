@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
+import BackgroundImage from './BackgroundImage';
 import { asset } from '@/utils/asset';
 
 interface ViajarATepicPageProps {
@@ -21,8 +22,9 @@ const ViajarATepicPage: React.FC<ViajarATepicPageProps> = ({ onClose }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed inset-0 z-[100] bg-[#faf8f5] overflow-y-auto"
+      className="fixed inset-0 z-[100] overflow-y-auto relative"
     >
+      <BackgroundImage />
       {/* Header con botón cerrar */}
       <header className="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 z-[110] bg-[#faf8f5]/95 backdrop-blur-sm shadow-sm border-b border-[#e8e0d8]/30">
         <button 
