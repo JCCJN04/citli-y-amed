@@ -673,7 +673,7 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
               <img src={asset('iglesia.png')} className="w-full h-full object-contain" alt="Iglesia" decoding="async" loading="lazy" />
             </div>
             <h3 className="font-serif-display text-2xl tracking-wider mb-4 text-[#4a5a3f] font-semibold">Ceremonia Religiosa</h3>
-            <p className="font-serif-elegant italic text-[#6a5c4e] mb-6 text-lg font-medium">12:30 Horas</p>
+            <p className="font-serif-elegant italic text-[#6a5c4e] mb-6 text-lg font-medium">12:45 Horas</p>
             <div className="space-y-3 mb-6 text-[#4a5a3f]">
               <p className="font-serif-elegant text-base leading-relaxed font-medium">
                 Templo Expiatorio De Nuestra Señora Del Carmen
