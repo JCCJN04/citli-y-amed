@@ -12,7 +12,7 @@ const PasswordProtection: React.FC<PasswordProtectionProps> = ({ onAuthenticated
   const [isLoading, setIsLoading] = useState(false);
   
   // Contraseña correcta - Puedes cambiarla aquí
-  const CORRECT_PASSWORD = 'citliyamed2026';
+  const CORRECT_PASSWORD = '28032026';
 
   useEffect(() => {
     // Verificar si ya está autenticado en esta sesión
