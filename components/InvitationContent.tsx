@@ -535,17 +535,17 @@ const InvitationContent: React.FC<InvitationContentProps> = ({ colorMode = true 
         {/* Tarjeta inferior (overlap editorial) */}
         <motion.div
           {...fadeInUp}
-          className="w-full max-w-[340px] md:max-w-[500px] text-center mt-[-22px] pt-10 pb-8 px-6 bg-[#F3EFE8]/70 backdrop-blur-[4px] border border-black/5 shadow-[0_30px_70px_-50px_rgba(0,0,0,0.45)]"
+          className="w-full max-w-[340px] md:max-w-[500px] text-center mt-[-22px] pt-10 pb-8 px-4 md:px-6 bg-[#F3EFE8]/70 backdrop-blur-[4px] border border-black/5 shadow-[0_30px_70px_-50px_rgba(0,0,0,0.45)]"
         > 
           <div className="space-y-1 mb-6">
-            <p className="text-3xl md:text-4xl font-script text-[#2B2B2B] leading-tight text-left px-2 whitespace-nowrap">
+            <p className="text-xl md:text-4xl font-script text-[#2B2B2B] leading-tight text-center md:text-left px-0 md:px-2 md:whitespace-nowrap">
               Citli Daniela
             </p>
-            <p className="text-2xl md:text-3xl font-script text-[#2B2B2B] text-center">
+            <p className="text-xl md:text-3xl font-script text-[#2B2B2B] text-center">
               y
             </p>
             <br />
-            <p className="text-3xl md:text-4xl font-script text-[#2B2B2B] leading-tight text-right px-2 whitespace-nowrap">
+            <p className="text-xl md:text-4xl font-script text-[#2B2B2B] leading-tight text-center md:text-right px-0 md:px-2 md:whitespace-nowrap">
               Amed Francisco
             </p>
           </div>
