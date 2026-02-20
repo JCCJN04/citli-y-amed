@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invitación de Boda — Vista Previa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alice&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @font-face {
+        font-family: 'Migra';
+        src: url('/fonts/Migra Font Family/Migra - Free for Personal Use/Migra-Extralight.woff2') format('woff2'),
+             url('/fonts/Migra Font Family/Migra - Free for Personal Use/Migra-Extralight.woff') format('woff'),
+             url('/fonts/Migra Font Family/Migra - Free for Personal Use/Migra-Extralight.ttf') format('truetype');
+        font-weight: 200;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Migra';
+        src: url('/fonts/Migra Font Family/Migra - Free for Personal Use/Migra-Extrabold.woff2') format('woff2'),
+             url('/fonts/Migra Font Family/Migra - Free for Personal Use/Migra-Extrabold.woff') format('woff'),
+             url('/fonts/Migra Font Family/Migra - Free for Personal Use/Migra-Extrabold.ttf') format('truetype');
+        font-weight: 800;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Breathing';
+        src: url('/fonts/breathing/Breathing Personal Use Only.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Road Race';
+        src: url('/fonts/road-race/ttf/road-race-road-race-regular-stamp-400.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      body {
+        background-color: transparent;
+        margin: 0;
+        overflow-x: hidden;
+        color: #3e3d3b;
+        touch-action: pan-y pinch-zoom;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        overscroll-behavior-x: none;
+      }
+      .font-serif-elegant { font-family: 'Migra', serif; letter-spacing: 0.02em; }
+      .font-serif-display { font-family: 'Breathing', cursive; font-weight: normal; letter-spacing: 0.05em; }
+      .font-sans-clean { font-family: 'Road Race', sans-serif; letter-spacing: 0.03em; }
+      .font-script { font-family: 'Breathing', cursive; }
+      .font-breathing { font-family: 'Breathing', cursive; }
+      .font-alice { font-family: 'Alice', serif; }
+      
+      .vertical-text {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+      }
+
+      .grain-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.015;
+        background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+        mix-blend-mode: multiply;
+      }
+
+      .linen-texture {
+        background-image: url("https://www.transparenttextures.com/patterns/linen-design.png");
+      }
+
+      .btn-editorial {
+        background-color: #5f6d4f;
+        color: white;
+        padding: 4px 20px;
+        font-family: 'Road Race', sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+      }
+      .btn-editorial:hover {
+        background-color: #7a8269;
+      }
+
+      .matchbox-card {
+        background: white;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08);
+        border: 1px solid rgba(95,109,79,0.2);
+      }
+
+      @keyframes cardGradient {
+        0% { background-position: 0% 10%; }
+        50% { background-position: 100% 91%; }
+        100% { background-position: 0% 10%; }
+      }
+
+      @keyframes cardAnimation {
+        60% {
+          background-size: 400px 267px;
+          background-position-x: 60%;
+          background-position-y: 60%;
+        }
+      }
+
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Mejorar calidad de imágenes - Estilo Framer */
+      img {
+        display: block;
+        object-fit: cover;
+        object-position: center center;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+      }
+
+      .grayscale {
+        filter: grayscale(100%);
+      }
+    </style>
+    <!-- Script de Tally para altura dinámica -->
+    <script async src="https://tally.so/widgets/embed.js"></script>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "framer-motion": "https://esm.sh/framer-motion@^12.23.26",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <div class="grain-overlay"></div>
+  <script type="module" src="/public.tsx"></script>
+</body>
+</html>
